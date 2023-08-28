@@ -15,8 +15,12 @@ async function getNft(req, res) {
  });
 
  // Rest of the API logic
- const indexerClient = new algosdk.Indexer('', 'https://algoindexer.algoexplorerapi.io', '');
+ const token = {
+   'X-API-Key': process.env.indexerKey
+ }
 
+
+ const indexerClient = new algosdk.Indexer(token, 'https://mainnet-algorand.api.purestake.io/idx2', '');
 
   let response;
 

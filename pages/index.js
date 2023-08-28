@@ -7,8 +7,8 @@ import { Grid, Typography, Button } from "@mui/material"
 import Nav from "../components/nav/nav"
 
 import Map from "../components/maps/map"
-
-import WalletAssets from "../components/wallet/walletAssets"
+import Camp from "../components/wallet/camp"
+import Collection from "../components/wallet/collection"
 
 import { useWallet, walletconnect } from '@txnlab/use-wallet'
 
@@ -136,17 +136,25 @@ export default function Index() {
 
                <Nav activeAccount={activeAccount} page={page} setPage={setPage} />
 
-               {page == "wallet" ? 
-               <WalletAssets />
+               {page == "map" ? 
+               <Map setPage={setPage} />
+               :
+               null
+               }
+
+               {page == "camp" ? 
+               <Camp />
+                :
+                null
+                }
+
+              {page == "collection" ? 
+               <Collection />
                 :
                 null
                 }
                
-               {page == "map" ? 
-               <Map />
-               :
-               null
-               }
+              
 
               {page == "market" ? 
                <Market />

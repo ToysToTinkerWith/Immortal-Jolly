@@ -23,21 +23,22 @@ export default function Connect(props) {
   // Render account information and "connect", "set active", and "disconnect" buttons.
   // Finally, map through the `accounts` property to render a dropdown for each connected account.
   return (
-    <div style={{float: "right", margin: "10%"}}>
+    <div style={{float: "right", margin: "15%"}}>
 
       {props.activeAccount ?
       <Button
       variant="text"
+      
       onClick={handleClick} 
       >
-        <Typography> Connected </Typography>
+        <Typography > Connected </Typography>
     </Button>
       :
       <Button
         variant="text"
         onClick={handleClick} 
         >
-          <Typography> Connect Wallet </Typography>
+          <Typography > Connect Wallet </Typography>
       </Button>
       }
       

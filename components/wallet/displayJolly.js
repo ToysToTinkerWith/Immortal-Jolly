@@ -61,7 +61,7 @@ export default class DisplayJolly extends React.Component {
 
             this.setState({
                 nft: session.assets[0].params,
-                nftUrl: "https://ipfs.io/ipfs/" + session.assets[0].params.url.slice(21),
+                nftUrl: "https://gateway.pinata.cloud/ipfs/" + session.assets[0].params.url.slice(21),
             })
 
         }
@@ -69,11 +69,15 @@ export default class DisplayJolly extends React.Component {
         else {
             this.setState({
                 nft: session.assets[0].params,
-                nftUrl: "https://ipfs.io/ipfs/" + session.assets[0].params.url.slice(7),
+                nftUrl: "https://gateway.pinata.cloud/ipfs/" + session.assets[0].params.url.slice(7),
             })
         }
 
-        const client = new algosdk.Algodv2("", "https://node.algoexplorerapi.io/", "")
+        const token = {
+            'X-API-Key': process.env.indexerKey
+        }
+  
+        const client = new algosdk.Algodv2(token, 'https://mainnet-algorand.api.purestake.io/ps2', '')
 
         try {
 
@@ -126,25 +130,28 @@ export default class DisplayJolly extends React.Component {
     
         if (this.state.nft) {
 
-            console.log(this.props.round - this.state.cashRound)
-            console.log(this.state.cashRound)
-            
+            if (this.props.display == "collection") {
                 return (
                     <div style={{position: "relative"}}>
                     
                     <div style={{display: "block"}} onClick={() => this.props.setNft(this.props.nftId, this.props.price)} >
                         <Typography color="secondary" style={{position: "absolute", bottom: this.props.price ? 55 : 15, left: 15}} align="left" variant="caption"> {this.state.nft.name} </Typography>
                         <img style={{width: "100%", borderRadius: 5}} src={this.state.nftUrl} />
-                        {this.props.price ? 
-                        <Typography color="secondary" align="center" variant="h6"> 
-                        <img style={{width: 50, paddingRight: 20}} src="./invDC.svg"/>
-                        {(this.props.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
- 
-                        </Typography>
-                        :
-                        null
-                        }
-                       
+
+                    </div>
+
+                    
+                    </div>
+        
+                )
+            }
+            
+                return (
+                    <div style={{position: "relative"}}>
+                    
+                    <div style={{display: "block"}} onClick={() => this.props.setNft(this.props.nftId, this.props.price)} >
+                        <Typography color="secondary" style={{position: "absolute", bottom: this.props.price ? 55 : 15, left: 15}} align="left" variant="caption"> {this.state.nft.name} </Typography>
+                        <img style={{width: "100%", borderRadius: 5}} src={this.state.nftUrl} />      
 
                     </div>
 

@@ -9,18 +9,14 @@ export default function Map(props) {
 
     return (
         <div style={{position: "relative"}} >
-            <Button style={{position: "absolute", left: "50%", top: "40%"}}>
-                <img src={"jollys/Jolly.png"} style={{width: "10vw"}} />
+            <Button style={{position: "absolute", left: "20%", top: "30%"}} onClick={() => props.setPage("camp")}>
+            <img src={"righttri.svg"} style={{position: "absolute", width: 20, bottom: "10vw", left: "15vw",}} />
+
+            <Typography color="primary"  align="center" variant="h4" style={{position: "absolute", fontFamily: "Deathrattle", bottom: "12vw", left: "15vw", backgroundColor: "#FFFFFF", padding: 5, paddingRight: 20, paddingLeft: 20}}> Camp </Typography>
+
+                <img src={"camp.png"} style={{width: "15vw"}} />
             </Button>
-            <Button style={{position: "absolute", left: "65%", top: "50%"}}>
-                <img src={"jollys/Angel.png"} style={{width: "10vw"}} />
-            </Button>
-            <Button style={{position: "absolute", left: "20%", top: "62%"}}>
-                <img src={"jollys/Bubble.png"} style={{width: "10vw"}} />
-            </Button>
-            <Button style={{position: "absolute", left: "50%", top: "40%"}}>
-                <img src={"jollys/Jolly.png"} style={{width: "10vw"}} />
-            </Button>
+           
             <img src={"map.png"} style={{width: "100%", height: "100%"}} />
             
            
