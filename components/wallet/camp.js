@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import Head from "next/head"
 
-import { Grid, Typography, Button } from "@mui/material"
+import { Grid, Typography, Button, CircularProgress } from "@mui/material"
 
 import Nav from "../nav/nav"
 
@@ -10,8 +10,9 @@ import { useWallet } from '@txnlab/use-wallet'
 
 import algosdk from "algosdk"
 import DisplayJolly from "./displayJolly"
+import { SetMealSharp } from "@mui/icons-material"
 
-export default function Camp() { 
+export default function Camp(props) { 
 
   const { activeAccount, signTransactions, sendTransactions } = useWallet()
 
@@ -24,21 +25,22 @@ export default function Camp() {
 
   const [ contract ] = useState(1115541498)
 
-
-  
-
-  const [ message, setMessage] = useState("Loading Jollys...")
-
+  const [progress, setProgress] = useState(0)
 
 
   
 
+  const [ message, setMessage] = useState("Loading Jollys")
+
+  console.log(activeAccount)
 
 
     React.useEffect(() => {
 
         const fetchData = async () => {
             if (activeAccount) {
+
+              try {
 
               const token = {
                 'X-API-Key': process.env.indexerKey
@@ -51,8 +53,8 @@ export default function Camp() {
               setRound(status["last-round"])
 
               setAssets([])
-              setCashAssets([])
               setConfirm("")
+              setProgress(0)
 
               let jollys = []
 
@@ -114,9 +116,7 @@ export default function Camp() {
 
           }
 
-          console.log(accountAssets)
-
-        
+          setProgress(20)
 
 
               let addr1 = await fetch('/api/getCreatedAssets', {
@@ -141,6 +141,8 @@ export default function Camp() {
                   }
               })
 
+              setProgress(40)
+
               let addr2 = await fetch('/api/getCreatedAssets', {
                 method: "POST",
                 headers: {
@@ -162,10 +164,11 @@ export default function Camp() {
                 res2.assets.forEach((asset) => {
                   testarr.push(asset.index)
                   if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 5})                  }
+                    jollys.push({asset: asset, reward: 5})                  
+                  }
               })
 
-              console.log(testarr)
+              setProgress(60)
 
               let addr3 = await fetch('/api/getCreatedAssets', {
                 method: "POST",
@@ -188,6 +191,8 @@ export default function Camp() {
                     jollys.push({asset: asset, reward: 3})
                   }
               })
+
+              setProgress(80)
 
               let addr4 = await fetch('/api/getCreatedAssets', {
                 method: "POST",
@@ -217,15 +222,21 @@ export default function Camp() {
               else {
                 setMessage("No Jollys Found")
               }
+            }
+            catch(error) {
+              props.sendDiscordMessage(error, "Camp Fetch", activeAccount.address)
+            }
           }
         }
           fetchData();
+        
+      }, [activeAccount, message])
 
-      }, [activeAccount])
+      console.log(activeAccount)
+
 
   let cashOut = async () => {
 
-    console.log(activeAccount)
 
     setConfirm("Sign Transaction...")
       
@@ -258,6 +269,11 @@ export default function Camp() {
               new Uint8Array(Buffer.from("addAsset"))
             )
           }
+          else if (asset.option == "unstake") {
+            appArgs.push(
+              new Uint8Array(Buffer.from("removeAsset"))
+            )
+          }
 
 
           
@@ -278,7 +294,7 @@ export default function Camp() {
             let dtxn = algosdk.makeApplicationNoOpTxn(activeAccount.address, params, contract, appArgs, accounts, foreignApps, foreignAssets, undefined, undefined, undefined, boxes);
       
             txns.unshift(dtxn)
-          
+            
 
       })
       if (txns.length > 1) {
@@ -304,31 +320,43 @@ export default function Camp() {
 
         let confirmedTxn = await algosdk.waitForConfirmation(client, id, 4);
 
-        setConfirm("Transaction Confirmed")
+
+        setCashAssets([])
+        if (message == "Updating") {
+          setMessage("Loading Jollys")
+        }
+        else {
+          setMessage("Updating")
+        }
+        
+        
+
+        
 
       
       
     }
     catch (error) {
       setConfirm(String(error))
-      console.log(error)
+      props.sendDiscordMessage(error, "Camp Cash Out")
     }
 
   }
 
-
-    
-console.log(assets)
-
         let totalRewards = 0
         let totalStake = 0
+        let totalUnstake = 0
 
         cashAssets.forEach((asset) => {
           totalRewards += asset.reward
           if (asset.option == "stake") {
             totalStake++
           }
+          else if (asset.option == "unstake") {
+            totalUnstake++
+          }
         })
+
         return (
           
             <div >
@@ -361,6 +389,11 @@ console.log(assets)
               :
               null
               }
+              {totalUnstake > 0 ?
+              <Typography color="primary" align="left" variant="h6"> Unstake: {totalUnstake} </Typography>
+              :
+              null
+              }
 
             <Typography color="primary"  align="center" variant="caption" style={{display: "grid"}}> {confirm} </Typography>
 
@@ -375,14 +408,18 @@ console.log(assets)
               <Grid container>
               {assets.length > 0 ? assets.map((asset, index) => {
                 return (
-                  <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
-                  <DisplayJolly nftId={asset.asset.index} reward={asset.reward} round={round} cashAssets={cashAssets} setCashAssets={setCashAssets} display={"camp"}/>
+                  <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
+                  <DisplayJolly nftId={asset.asset.index} reward={asset.reward} round={round} cashAssets={cashAssets} setCashAssets={setCashAssets} display={"camp"} sendDiscordMessage={props.sendDiscordMessage}/>
                   </Grid>
                 )
                 
               })
               :
-              <Typography style={{margin: 30}}> {message} </Typography>
+              <div style={{display: "flex"}}>
+                <Typography style={{margin: 30}}> {message} </Typography>
+                <CircularProgress variant="determinate" value={progress} />
+
+              </div>
               }
              
                 

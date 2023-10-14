@@ -14,11 +14,9 @@ import "../style.css"
 import { reconnectProviders, WalletProvider, PROVIDER_ID, pera, myalgo, defly, exodus, algosigner, walletconnect  } from '@txnlab/use-wallet'
 
 import algosdk from "algosdk";
-import MyAlgoConnect from "@randlabs/myalgo-connect";
 import { PeraWalletConnect } from "@perawallet/connect";
 import { DeflyWalletConnect } from "@blockshake/defly-connect";
-import WalletConnect from "@walletconnect/client";
-import QRCodeModal from "algorand-walletconnect-qrcode-modal";
+
 
 const walletProviders = {
   [PROVIDER_ID.PERA]: pera.init({
@@ -47,6 +45,26 @@ export default function MyApp(props) {
     }
   }, []);
 
+  const sendDiscordMessage = async (error, location, address) => {
+
+    console.log(error)
+       
+    const response = await fetch(process.env.jollyWebhook, {
+      method: "POST",
+      body: JSON.stringify({ 
+        embeds: [{
+          title: String(address) + " " + String(location),
+          description: String(error)
+        }]
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    console.log(response.body)
+  }
+
 
   return (
     
@@ -55,7 +73,7 @@ export default function MyApp(props) {
       <WalletProvider value={walletProviders}>
       <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Component {...pageProps} />
+        <Component {...pageProps} sendDiscordMessage={sendDiscordMessage}/>
       </ThemeProvider>
       </WalletProvider>
     </React.Fragment>

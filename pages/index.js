@@ -12,115 +12,10 @@ import Collection from "../components/wallet/collection"
 
 import { useWallet, walletconnect } from '@txnlab/use-wallet'
 
-import algosdk from "algosdk"
-
-export default function Index() { 
+export default function Index(props) { 
 
     const { activeAccount } = useWallet()
     const [page, setPage] = useState("map")
-    const [ accountSheps, setAccountSheps ] = useState([])
-
-
-    React.useEffect(() => {
-        console.log(activeAccount)
-
-        const fetchData = async () => {
-            if (activeAccount) {
-
-              let creatorResponse = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "SHEPWD4POJMJ65XPSGUCJ4GI2SGDJNDX2C2IXI24EK5KXTOV5T237ULUCU"
-
-                    
-                }),
-                
-                  
-                });
-
-                const sheps = await creatorResponse.json()
-
-                console.log(sheps)
-
-                let shepNfts = []
-
-                sheps.assets.forEach((asset) => {
-                  shepNfts.push(asset.index)
-                  
-              })
-
-
-              setAccountSheps([])
-
-
-
-                let response = await fetch('/api/getAssets', {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        address: activeAccount.address
-
-                        
-                    }),
-                    
-                      
-                  });
-          
-                  const session = await response.json()
-
-                  session.assets.forEach((asset) => {
-                    
-                    if (shepNfts.includes(asset["asset-id"]) && asset.amount == 1) {
-                      setAccountSheps([...accountSheps, asset["asset-id"]])
-                    }
-                })
-
-                  let numAssets = session.assets.length
-                  let nextToken = session["next-token"]
-    
-                while (numAssets == 1000) {
-
-                  response = await fetch('/api/getAssets', {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                        address: activeAccount.address,
-                        nextToken: nextToken
-                        
-                        
-                    }),
-                    
-                      
-                  });  
-
-                  const session = await response.json()
-
-                  session.assets.forEach((asset) => {
-                    if (shepNfts.includes(asset["asset-id"]) && asset.amount == 1) {
-                      accountSheps.push([...accountSheps, asset["asset-id"]])
-                    }
-                  })
-  
-                  numAssets = accountAssets.assets.length
-                  nextToken = accountAssets["next-token"]
-  
-              }
-    
-            }
-          }
-          fetchData();
-
-      }, [activeAccount])
-
-
-    console.log(activeAccount)
    
 
         return (
@@ -136,20 +31,20 @@ export default function Index() {
 
                <Nav activeAccount={activeAccount} page={page} setPage={setPage} />
 
-               {page == "map" ? 
-               <Map setPage={setPage} />
+               {page == "map" || page == "connect" ? 
+               <Map setPage={setPage} activeAccount={activeAccount} />
                :
                null
                }
 
                {page == "camp" ? 
-               <Camp />
+               <Camp sendDiscordMessage={props.sendDiscordMessage}/>
                 :
                 null
                 }
 
               {page == "collection" ? 
-               <Collection />
+               <Collection sendDiscordMessage={props.sendDiscordMessage} />
                 :
                 null
                 }

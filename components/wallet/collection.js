@@ -11,7 +11,7 @@ import { useWallet } from '@txnlab/use-wallet'
 import algosdk from "algosdk"
 import DisplayJolly from "./displayJolly"
 
-export default function Camp() { 
+export default function Camp(props) { 
 
   const { activeAccount, signTransactions, sendTransactions } = useWallet()
 
@@ -51,7 +51,6 @@ export default function Camp() {
               setRound(status["last-round"])
 
               setAssets([])
-              setCashAssets([])
               setConfirm("")
 
               let jollys = []
@@ -219,11 +218,17 @@ export default function Camp() {
               }
           }
         }
+        try {
           fetchData();
+        }
+        catch(error) {
+          props.sendDiscordMessage(error, "Collection Fetch")
+        }
 
       }, [activeAccount])
 
   let cashOut = async () => {
+
 
     console.log(activeAccount)
 
@@ -293,6 +298,9 @@ export default function Camp() {
       })
 
       const signedTransactions = await signTransactions(encodedTxns)
+      let reload = assets
+
+      setAssets([])
       setConfirm("Sending Transaction...")
           
         const { id } = await sendTransactions(signedTransactions)
@@ -305,6 +313,11 @@ export default function Camp() {
         let confirmedTxn = await algosdk.waitForConfirmation(client, id, 4);
 
         setConfirm("Transaction Confirmed")
+
+
+
+        
+        setAssets(reload)
 
       
       

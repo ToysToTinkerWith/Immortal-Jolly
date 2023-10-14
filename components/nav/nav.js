@@ -35,27 +35,27 @@ export default class Nav extends React.Component {
   // Render account information and "connect", "set active", and "disconnect" buttons.
   // Finally, map through the `accounts` property to render a dropdown for each connected account.
   render() {
-    console.log(this.state)
+    console.log(this.props)
     return (
 
 
       <div style={{backgroundColor: "#FFFFFD"}}>
           <Grid container>
-              <Grid item xs={3} sm={3} md={3}>
-                <Button style={{float: "right", margin: "5%"}}onClick={() => this.props.setPage("map")}>
-                  <img src={"./logo.png"} style={{width: "20%", minWidth: 50, margin: "10%"}} />
+              <Grid item xs={2} sm={2} md={2}>
+                <Button style={{display: "flex", margin: "auto"}} onClick={() => this.props.setPage("map")}>
+                  <img src={"./logo.png"} style={{width: this.state.width > 600 ? 100 : 60}} />
                 </Button>
               </Grid>
               {this.state.width < 600 ?
-                <Grid item align="right" xs={9} sm={3} md={3}>
-                  <CombineAll activeAccount={this.props.activeAccount} setPage={this.props.setPage} />
+                <Grid item  xs={9} sm={3} md={3}>
+                  <CombineAll activeAccount={this.props.activeAccount} setPage={this.props.setPage} open={this.props.page == "connect" ? true : false} page={this.props.page}/>
                 </Grid>
                 :
               <>
               
-              <Grid item align="right" xs={12} sm={3} md={3}>
+              <Grid item xs={12} sm={3} md={3}>
                 <br />
-                <Button style={{float: "right", margin: "15%"}} disabled={!this.props.activeAccount} onClick={() => this.props.setPage("collection")}>
+                <Button style={{float: "right", margin: 10}} disabled={!this.props.activeAccount} onClick={() => this.props.setPage("collection")}>
                   <Typography> Collection </Typography>
                 </Button>            
               </Grid>
@@ -64,7 +64,7 @@ export default class Nav extends React.Component {
               <Grid item xs={12} sm={3} md={3}>
                 <br />
               <Button 
-              style={{float: "right", margin: "15%"}} 
+              style={{float: "right", margin: 10}} 
               onClick={() => window.open("https://immortaljolly.com/")}
               >
                 <Typography> Immortal Jolly </Typography>
@@ -74,7 +74,7 @@ export default class Nav extends React.Component {
              
               <Grid item xs={12} sm={3} md={3}>
                 <br />
-                <Connect activeAccount={this.props.activeAccount} />
+                <Connect activeAccount={this.props.activeAccount} page={this.props.page} open={this.props.page == "connect" ? true : false} setPage={this.props.setPage} />
               </Grid>
               </>
               }
