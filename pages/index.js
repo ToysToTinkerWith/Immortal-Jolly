@@ -8,6 +8,10 @@ import Nav from "../components/nav/nav"
 
 import Map from "../components/maps/map"
 import Camp from "../components/wallet/camp"
+import Shrine from "../components/wallet/shrine"
+import Obelisk from "../components/wallet/obelisk"
+
+import Arena from "../components/wallet/arena/arena"
 import Collection from "../components/wallet/collection"
 
 import { useWallet, walletconnect } from '@txnlab/use-wallet'
@@ -39,6 +43,24 @@ export default function Index(props) {
 
                {page == "camp" ? 
                <Camp sendDiscordMessage={props.sendDiscordMessage}/>
+                :
+                null
+                }
+
+                {page == "shrine" ? 
+               <Shrine sendDiscordMessage={props.sendDiscordMessage}/>
+                :
+                null
+                }
+
+                {page == "obelisk" ? 
+                <Obelisk sendDiscordMessage={props.sendDiscordMessage}/>
+                :
+                null
+                }
+
+                {page == "arena" ? 
+               <Arena sendDiscordMessage={props.sendDiscordMessage}/>
                 :
                 null
                 }

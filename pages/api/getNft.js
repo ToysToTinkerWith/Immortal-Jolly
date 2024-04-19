@@ -20,11 +20,13 @@ async function getNft(req, res) {
  }
 
 
- const indexerClient = new algosdk.Indexer(token, 'https://mainnet-algorand.api.purestake.io/idx2', '');
+ const indexerClient = new algosdk.Indexer('', 'https://mainnet-idx.algonode.cloud', 443)
 
   let response;
 
   response = await indexerClient.searchForAssets().index(req.body.nftId).do();
+
+  
   
   
   res.json(response);

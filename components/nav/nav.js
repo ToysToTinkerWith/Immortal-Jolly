@@ -35,7 +35,6 @@ export default class Nav extends React.Component {
   // Render account information and "connect", "set active", and "disconnect" buttons.
   // Finally, map through the `accounts` property to render a dropdown for each connected account.
   render() {
-    console.log(this.props)
     return (
 
 

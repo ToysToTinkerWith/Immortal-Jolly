@@ -26,7 +26,7 @@ export default function Camp(props) {
 
   
 
-  const [ message, setMessage] = useState("Searching for Jollys")
+  const [ message, setMessage] = useState("Searching for Babies")
 
 
     React.useEffect(() => {
@@ -110,117 +110,44 @@ export default function Camp(props) {
 
           }
 
-          setProgress(20)
+          setProgress(50)
 
 
-              let addr1 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "4FPA3KPLZPKMTQ7ER3XLFCXZX46W2FD2WVFDRZULGLKNGURWDX7MYDB4HA"
+          let addr1 = await fetch('/api/getCreatedAssets', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                address: "XILPARLALRXJVN2UEVUW5YGCLMSBUYSFNWM6QGVJHLXWOID6CQUVZVPKCU"
 
-                    
-                }),
                 
-                  
-                });
+            }),
+            
+              
+            });
 
-                const res1 = await addr1.json()
+            const res1 = await addr1.json()
 
-                res1.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                  jollys.push({asset: asset, reward: 10})
-                  }
-              })
-
-              setProgress(40)
-
-              let addr2 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "I4BY7MKHRXW2JNBMEHP5NC4GTD55W6TQW5LIYSQOWL3RKUD6MBZHYM52DM"
-
-                    
-                }),
-                
-                  
-                });
-
-                let testarr = []
-
-                const res2 = await addr2.json()
-
-                res2.assets.forEach((asset) => {
-                  testarr.push(asset.index)
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 5})                  
-                  }
-              })
-
-              setProgress(60)
-
-              let addr3 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "AOKWUQSOVXQSEKFPMSDZ273PMERUOY4OF7CFCKCXZR3565BT6XOSWHLI3M"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res3 = await addr3.json()
-
-                res3.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 3})
-                  }
-              })
-
-              setProgress(80)
-
-              let addr4 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "E25YOES4G3SBKVJ3UAUDCP5RDU7RYBB6MAF4Y3XPLGGZNS3E6XI6H6STK4"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res4 = await addr4.json()
-
-                res4.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 10})                  
-                  }
-              })
-
-              setProgress(100)
-
-              if(jollys.length > 0) {
-                setAssets(jollys)
+            res1.assets.forEach((asset) => {
+              if (accountAssets.includes(asset.index)) {
+              jollys.push({asset: asset, reward: 5})
               }
-              else {
-                setMessage("No Jollys Found")
-              }
+          })
+
+          setProgress(100)
+
+          
+
+          if(jollys.length > 0) {
+            setAssets(jollys)
+          }
+          else {
+            setMessage("No Babies Found")
+          }
             }
             catch(error) {
-              props.sendDiscordMessage(error, "Camp Fetch", activeAccount.address)
+              props.sendDiscordMessage(error, "Shrine Fetch", activeAccount.address)
             }
           }
         }
@@ -318,13 +245,14 @@ export default function Camp(props) {
 
         setCashAssets([])
         
+        
+        setAssets([])
         let status = await client.status().do();
 
         setRound(status["last-round"])
-        setAssets([])
+        setMessage("Updating Babies...")
               setConfirm("")
               setProgress(0)
-              setMessage("Updating Jollys")
 
               let jollys = []
 
@@ -386,7 +314,7 @@ export default function Camp(props) {
 
           }
 
-          setProgress(20)
+          setProgress(50)
 
 
               let addr1 = await fetch('/api/getCreatedAssets', {
@@ -395,7 +323,7 @@ export default function Camp(props) {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    address: "4FPA3KPLZPKMTQ7ER3XLFCXZX46W2FD2WVFDRZULGLKNGURWDX7MYDB4HA"
+                    address: "XILPARLALRXJVN2UEVUW5YGCLMSBUYSFNWM6QGVJHLXWOID6CQUVZVPKCU"
 
                     
                 }),
@@ -407,106 +335,13 @@ export default function Camp(props) {
 
                 res1.assets.forEach((asset) => {
                   if (accountAssets.includes(asset.index)) {
-                  jollys.push({asset: asset, reward: 10})
+                  jollys.push({asset: asset, reward: 5})
                   }
               })
 
-              setProgress(40)
+              setProgress(100)
 
-              let addr2 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "I4BY7MKHRXW2JNBMEHP5NC4GTD55W6TQW5LIYSQOWL3RKUD6MBZHYM52DM"
-
-                    
-                }),
-                
-                  
-                });
-
-                let testarr = []
-
-                const res2 = await addr2.json()
-
-                res2.assets.forEach((asset) => {
-                  testarr.push(asset.index)
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 5})                  
-                  }
-              })
-
-              setProgress(60)
-
-              let addr3 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "AOKWUQSOVXQSEKFPMSDZ273PMERUOY4OF7CFCKCXZR3565BT6XOSWHLI3M"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res3 = await addr3.json()
-
-                res3.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 3})
-                  }
-              })
-
-              setProgress(80)
-
-              let addr4 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "E25YOES4G3SBKVJ3UAUDCP5RDU7RYBB6MAF4Y3XPLGGZNS3E6XI6H6STK4"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res4 = await addr4.json()
-
-                res4.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 10})                  
-                  }
-              })
-
-              let addr5 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "FSIOIQLCQYITAH4WMK2SDOF5R2FSPWFIZOVAHRR3M4AR2URG6D2MHRIQOE"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res5 = await addr5.json()
-
-                res5.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 5})                  
-                  }
-              })
+              
 
               if(jollys.length > 0) {
                 setAssets(jollys)
@@ -519,7 +354,7 @@ export default function Camp(props) {
     }
     catch (error) {
       setConfirm(String(error))
-      props.sendDiscordMessage(error, "Camp Cash Out")
+      props.sendDiscordMessage(error, "Shrine Cash Out")
     }
 
   }
@@ -542,10 +377,9 @@ export default function Camp(props) {
           
             <div >
 
-              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle",  padding: 5, paddingLeft: 30}}> Let your champion rest! </Typography>
+              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle",  padding: 5, paddingLeft: 30}}> May your dreams come true </Typography>
 
-              <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> While your Champion rests let him count his Cursed Gold and ready themself for the next Adventure. </Typography>
-
+              <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> Praying at the shrine will grant you good luck and happiness ! Take time to meditate, and you will be rewarded with Cursed Gold. </Typography>
 
               {cashAssets.length > 0 ?
               

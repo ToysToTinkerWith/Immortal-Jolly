@@ -8,7 +8,7 @@ import { useWallet } from '@txnlab/use-wallet'
 import algosdk from "algosdk"
 import DisplayJolly from "./displayJolly"
 
-export default function Camp(props) { 
+export default function Obelisk(props) { 
 
   const { activeAccount, signTransactions, sendTransactions } = useWallet()
 
@@ -26,7 +26,7 @@ export default function Camp(props) {
 
   
 
-  const [ message, setMessage] = useState("Searching for Jollys")
+  const [ message, setMessage] = useState("Searching for Old Gods")
 
 
     React.useEffect(() => {
@@ -119,7 +119,7 @@ export default function Camp(props) {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    address: "4FPA3KPLZPKMTQ7ER3XLFCXZX46W2FD2WVFDRZULGLKNGURWDX7MYDB4HA"
+                    address: "FSIOIQLCQYITAH4WMK2SDOF5R2FSPWFIZOVAHRR3M4AR2URG6D2MHRIQOE"
 
                     
                 }),
@@ -131,84 +131,13 @@ export default function Camp(props) {
 
                 res1.assets.forEach((asset) => {
                   if (accountAssets.includes(asset.index)) {
-                  jollys.push({asset: asset, reward: 10})
+                  jollys.push({asset: asset, reward: 5})
                   }
               })
 
               setProgress(40)
 
-              let addr2 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "I4BY7MKHRXW2JNBMEHP5NC4GTD55W6TQW5LIYSQOWL3RKUD6MBZHYM52DM"
-
-                    
-                }),
-                
-                  
-                });
-
-                let testarr = []
-
-                const res2 = await addr2.json()
-
-                res2.assets.forEach((asset) => {
-                  testarr.push(asset.index)
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 5})                  
-                  }
-              })
-
-              setProgress(60)
-
-              let addr3 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "AOKWUQSOVXQSEKFPMSDZ273PMERUOY4OF7CFCKCXZR3565BT6XOSWHLI3M"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res3 = await addr3.json()
-
-                res3.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 3})
-                  }
-              })
-
-              setProgress(80)
-
-              let addr4 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "E25YOES4G3SBKVJ3UAUDCP5RDU7RYBB6MAF4Y3XPLGGZNS3E6XI6H6STK4"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res4 = await addr4.json()
-
-                res4.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 10})                  
-                  }
-              })
+              
 
               setProgress(100)
 
@@ -220,14 +149,13 @@ export default function Camp(props) {
               }
             }
             catch(error) {
-              props.sendDiscordMessage(error, "Camp Fetch", activeAccount.address)
+              props.sendDiscordMessage(error, "Obelisk Fetch", activeAccount.address)
             }
           }
         }
           fetchData();
         
       }, [activeAccount])
-
 
 
   let cashOut = async () => {
@@ -324,7 +252,7 @@ export default function Camp(props) {
         setAssets([])
               setConfirm("")
               setProgress(0)
-              setMessage("Updating Jollys")
+              setMessage("Updating Old Gods")
 
               let jollys = []
 
@@ -389,102 +317,7 @@ export default function Camp(props) {
           setProgress(20)
 
 
-              let addr1 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "4FPA3KPLZPKMTQ7ER3XLFCXZX46W2FD2WVFDRZULGLKNGURWDX7MYDB4HA"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res1 = await addr1.json()
-
-                res1.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                  jollys.push({asset: asset, reward: 10})
-                  }
-              })
-
-              setProgress(40)
-
-              let addr2 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "I4BY7MKHRXW2JNBMEHP5NC4GTD55W6TQW5LIYSQOWL3RKUD6MBZHYM52DM"
-
-                    
-                }),
-                
-                  
-                });
-
-                let testarr = []
-
-                const res2 = await addr2.json()
-
-                res2.assets.forEach((asset) => {
-                  testarr.push(asset.index)
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 5})                  
-                  }
-              })
-
-              setProgress(60)
-
-              let addr3 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "AOKWUQSOVXQSEKFPMSDZ273PMERUOY4OF7CFCKCXZR3565BT6XOSWHLI3M"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res3 = await addr3.json()
-
-                res3.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 3})
-                  }
-              })
-
-              setProgress(80)
-
-              let addr4 = await fetch('/api/getCreatedAssets', {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    address: "E25YOES4G3SBKVJ3UAUDCP5RDU7RYBB6MAF4Y3XPLGGZNS3E6XI6H6STK4"
-
-                    
-                }),
-                
-                  
-                });
-
-                const res4 = await addr4.json()
-
-                res4.assets.forEach((asset) => {
-                  if (accountAssets.includes(asset.index)) {
-                    jollys.push({asset: asset, reward: 10})                  
-                  }
-              })
+            
 
               let addr5 = await fetch('/api/getCreatedAssets', {
                 method: "POST",
@@ -519,7 +352,7 @@ export default function Camp(props) {
     }
     catch (error) {
       setConfirm(String(error))
-      props.sendDiscordMessage(error, "Camp Cash Out")
+      props.sendDiscordMessage(error, "Obelisk Cash Out")
     }
 
   }
@@ -542,9 +375,9 @@ export default function Camp(props) {
           
             <div >
 
-              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle",  padding: 5, paddingLeft: 30}}> Let your champion rest! </Typography>
+              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle",  padding: 5, paddingLeft: 30}}> Bow before the Gods </Typography>
 
-              <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> While your Champion rests let him count his Cursed Gold and ready themself for the next Adventure. </Typography>
+              <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> Bring gifts of Gold to appease the Gods and keep away their wrath. </Typography>
 
 
               {cashAssets.length > 0 ?
@@ -611,7 +444,7 @@ export default function Camp(props) {
                 
              </Grid>
                
-                
+            <br />
 
             </div>
         )

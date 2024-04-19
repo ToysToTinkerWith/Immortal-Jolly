@@ -3,6 +3,9 @@ import { useWallet } from '@txnlab/use-wallet'
 
 import { Button, Typography, Modal } from '@mui/material';
 
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+
+
 export default function Connect(props) {
   const { providers, activeAccount } = useWallet()
 
@@ -15,7 +18,6 @@ export default function Connect(props) {
     
 })
 
-console.log(props)
   // Map through the providers.
   // Render account information and "connect", "set active", and "disconnect" buttons.
   // Finally, map through the `accounts` property to render a dropdown for each connected account.
@@ -42,6 +44,7 @@ console.log(props)
     <Modal
     open={open}
     onClose={() => [setOpen(false), props.setPage("map")]}
+    onClick={() => [setOpen(false), props.setPage("map")]}
     style={{position: "absolute", top: "0", right: "0"}}
     >
     <div>
@@ -70,17 +73,16 @@ console.log(props)
           Set Active
         </Button>
         <div>
-          {provider.isActive && provider.accounts.length && (
-            <select
+          {provider.isActive && provider.accounts.length && activeAccount && (
+            <div
               value={activeAccount?.address}
               onChange={(e) => provider.setActiveAccount(e.target.value)}
             >
-              {provider.accounts.map((account) => (
-                <option key={account.address} value={account.address}>
-                  {account.address.substring(0,10)}
-                </option>
-              ))}
-            </select>
+              <Button onClick={() => navigator.clipboard.writeText(activeAccount.address)}>
+            <ContentCopyIcon color="primary" />
+            </Button>
+                  {activeAccount.address.substring(0,10)}
+            </div>
           )}
         </div>
       </div>

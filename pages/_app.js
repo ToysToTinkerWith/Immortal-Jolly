@@ -47,7 +47,6 @@ export default function MyApp(props) {
 
   const sendDiscordMessage = async (error, location, address) => {
 
-    console.log(error)
        
     const response = await fetch(process.env.jollyWebhook, {
       method: "POST",
@@ -62,7 +61,6 @@ export default function MyApp(props) {
       },
     });
 
-    console.log(response.body)
   }
 
 

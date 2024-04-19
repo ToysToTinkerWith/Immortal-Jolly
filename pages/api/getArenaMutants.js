@@ -3,7 +3,7 @@ import NextCors from 'nextjs-cors';
 import algosdk from "algosdk"
 
 
-async function getCreatedAssets(req, res) {
+async function getArenaMutants(req, res) {
    // Run the cors middleware
    // nextjs-cors uses the cors package, so we invite you to check the documentation https://github.com/expressjs/cors
 
@@ -20,20 +20,16 @@ async function getCreatedAssets(req, res) {
   }
 
   const indexerClient = new algosdk.Indexer('', 'https://mainnet-idx.algonode.cloud', 443)
-
-  let response;
-
-  if (req.body.nextToken) {
-      response = await indexerClient.lookupAccountCreatedAssets(req.body.address).nextToken(req.body.nextToken).limit(1000).do();
-  }
-  else {
-      response = await indexerClient.lookupAccountCreatedAssets(req.body.address).limit(1000).do();
-  }
   
-  res.json(response);
+  const responsePage = await indexerClient
+       .searchForApplicationBoxes(req.body.contract)
+       .limit(1000)
+       .do();
+  
+  res.json(responsePage);
   
 
    
 }
 
-export default getCreatedAssets
+export default getArenaMutants

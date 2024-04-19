@@ -26,6 +26,7 @@ export default class DisplayJolly extends React.Component {
     }
 
     async componentDidMount() {
+
         
         try {
 
@@ -44,48 +45,87 @@ export default class DisplayJolly extends React.Component {
             
             let session = await response.json()
     
-            console.log(session)
+            if(session.assets[0].params["unit-name"].substring(0, 2) == "80") {
+                if (session.assets[0].params.url[7] == "b") {
+                    this.setState({
+                        nft: session.assets[0].params,
+                        nftUrl: "https://ipfs.algonode.xyz/ipfs/" + session.assets[0].params.url.slice(7),
+                    })
+                }
+                else {
+                    fetch("https://gateway.pinata.cloud/ipfs/" + session.assets[0].params.url.slice(7), {
+                        method: 'get'
+                    }).then(async (response) => {
+                        let data = await response.json()
+                        this.setState({
+                            nft: session.assets[0].params,
+                            nftUrl: "https://ipfs.algonode.xyz/ipfs/" + data.image.slice(7),
+                        })
+
+                    }).catch(function(err) {
+                        // Error :(
+                    });
+                }
+                    
+
+            }
+            else if (session.assets[0].params.url.slice(0, 21) == "https://ipfs.io/ipfs/") {
+                this.setState({
+                    nft: session.assets[0].params,
+                    nftUrl: "https://ipfs.algonode.xyz/ipfs/" + session.assets[0].params.url.slice(21),
+                })
+            }
+            else {
+                this.setState({
+                    nft: session.assets[0].params,
+                    nftUrl: "https://ipfs.algonode.xyz/ipfs/" + session.assets[0].params.url.slice(7),
+                })
+        
+            }
+
+            
     
     
-    
-            this.setState({
-                nft: session.assets[0].params,
-                nftUrl: "https://gateway.pinata.cloud/ipfs/" + session.assets[0].params.url.slice(7),
-            })
-    
+            
            
     
             const token = {
                 'X-API-Key': process.env.indexerKey
             }
       
-            const client = new algosdk.Algodv2(token, 'https://mainnet-algorand.api.purestake.io/ps2', '')
+            const client = new algosdk.Algodv2('', 'https://mainnet-api.algonode.cloud', 443)
+
+            try {
+                let assetbox = await client.getApplicationBoxByName(this.state.contract, algosdk.encodeUint64(this.props.nftId)).do();
+                var length = assetbox.value.length;
+        
+                let buffer = Buffer.from(assetbox.value);
+                var result = buffer.readUIntBE(0, length);
+                
+                this.setState({
+                    cashRound: result
+                })
+
+            }
+            catch {
+
+            }
     
       
     
-            let assetbox = await client.getApplicationBoxByName(this.state.contract, algosdk.encodeUint64(this.props.nftId)).do();
-            console.log(assetbox)
-            var length = assetbox.value.length;
-    
-            let buffer = Buffer.from(assetbox.value);
-            var result = buffer.readUIntBE(0, length);
-    
-            console.log(result)
-    
-            this.setState({
-                cashRound: result
-            })
+           
     
         }
         }
         catch (error) {
-            setConfirm(String(error))
             this.props.sendDiscordMessage(error, "Display Jolly Fetch")
           }
 
         
           
       }
+
+      
 
 
       removeElement() {
@@ -104,8 +144,6 @@ export default class DisplayJolly extends React.Component {
 
 
     render() {
-
-        console.log(this.state)
 
         let sel = false
 
@@ -135,7 +173,7 @@ export default class DisplayJolly extends React.Component {
                 return (
                     <div style={{position: "relative"}}>
                     
-                        <div style={{display: "grid", borderRadius: 15}} onClick={() => this.props.setNft(this.props.nftId, this.props.price)} >
+                        <div style={{display: "grid", borderRadius: 15}}  >
                             <img style={{width: "100%", borderRadius: 50, padding: 20, paddingBottom: 10}} src={this.state.nftUrl} /> 
                             <Typography color="primary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
                         </div>
@@ -157,10 +195,10 @@ export default class DisplayJolly extends React.Component {
                         }
 
                         <Grid container align="center" spacing={0} >
-                            <Grid item xs={3} sm={3}>
+                            <Grid item xs={1} sm={1}>
 
                             </Grid>
-                            <Grid item xs={3} sm={3}>
+                            <Grid item xs={5} sm={5}>
                                 {this.props.round && this.state.cashRound && Math.floor(((this.props.round - this.state.cashRound) / 159000)) * this.props.reward > 0 ?
                                 <Button variant="contained" color="secondary" 
                                 style={{backgroundColor: sel && sel.option == "cash" ? "#7FF07D" : "#ffffff"}}
@@ -179,7 +217,7 @@ export default class DisplayJolly extends React.Component {
                                 </Button> 
                                 }
                             </Grid>
-                            <Grid item xs={3} sm={3}>
+                            <Grid item xs={5} sm={5}>
                                 {this.props.round && this.state.cashRound ?
                                 <Button variant="contained" color="secondary" 
                                 style={{backgroundColor: sel && sel.option == "unstake" ? "#7FF07D" : "#ffffff"}}
@@ -204,7 +242,7 @@ export default class DisplayJolly extends React.Component {
                                 </Button>
                                 }   
                             </Grid>
-                            <Grid item xs={3} sm={3}>
+                            <Grid item xs={1} sm={1}>
                                 
                             </Grid>
                         </Grid>

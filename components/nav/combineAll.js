@@ -16,8 +16,6 @@ export default function CombineAll(props) {
 
     const [open, setOpen] = useState(false)
 
-    console.log(props)
-
     return (
         <div style={{float: "right", margin: 20}}>
             <Button
@@ -41,14 +39,14 @@ export default function CombineAll(props) {
               >
           <List style={{position: "absolute", zIndex: 6, backgroundColor: "white", right: 0, borderRadius: 15, border: "1px solid black"}}>
           <ListItem>
-          <Button style={{float: "right", margin: "10%"}} disabled={!props.activeAccount} onClick={() => props.setPage("collection")}>
+          <Button style={{float: "right", margin: "10%"}} disabled={!props.activeAccount} onClick={() => [props.setPage("collection"), setOpen(false)]}>
             <Typography align="center"> Collection </Typography>
           </Button>
           </ListItem>
           <ListItem>
           <Button 
               style={{float: "right", margin: "10%"}} 
-              onClick={() => window.open("https://immortaljolly.com/")}
+              onClick={() => [window.open("https://immortaljolly.com/"), setOpen(false)]}
           >
               <Typography> Immortal Jolly </Typography>
 
