@@ -51,6 +51,7 @@ html, body, .main {
   flex-direction: row;
   height: 100%;
 }
+
 .arena-flex {
   display: flex;
   flex-direction: column;
@@ -59,6 +60,19 @@ html, body, .main {
   width: 50%;
   margin-left: 10px;
 }
+
+.contestant-img {
+  width: 30%;
+  border-radius: 25px;
+  margin-bottom: 10px;
+  margin-right: 10%;
+}
+
+.reward-img {
+  border-radius: 30px;
+  max-width: 100%;
+} 
+
 @media (max-width: 500px) {
     body {
         min-width: fit-content;
@@ -72,6 +86,11 @@ html, body, .main {
     .contestants-item {
       flex-direction: column; /* Stack children in a column for mobile screens */
     }
+    .contestant-img {
+      width: 50%;
+      border-radius: 25px;
+      margin-bottom: 10px;
+    }
     .prizes-content {
       display: flex;
       flex-direction: column;
@@ -82,7 +101,12 @@ html, body, .main {
         display: flex;
         width: 100%;
         flex-direction: column;
+        margin-bottom: 10px;
     }
+    .reward-img {
+      border-radius: 20px;
+      max-width: 100%;
+    } 
     .arena-body {
       display: flex;
       flex-direction: column;

@@ -281,8 +281,12 @@ export default function Camp(props) {
 
                 const contractAssets = await indexerClient.lookupAccountAssets(contractAccount).do();
 
-
-                let rewards = []
+                //need to convert to empty array
+                let rewards = [
+                  { assetId: 660889851, amount: 1 },
+                  { assetId: 660889849, amount: 1 },
+                  { assetId: 660892698, amount: 1 }
+                ];
 
                 contractAssets.assets.forEach((asset) => {
                   rewards.push({assetId: asset["asset-id"], amount: asset.amount})
@@ -627,6 +631,8 @@ export default function Camp(props) {
           }
         })
 
+        console.log("mutants: ", mutants);
+
 
         let multi
 
@@ -908,7 +914,7 @@ export default function Camp(props) {
 
         setContractRewards(rewards)
 
-
+        console.log("rewards: ", rewards);
 
    
     }
@@ -1062,32 +1068,11 @@ export default function Camp(props) {
         
           <div className="arena-flex">
 
-            {myRewards.length > 0 ?
-                    <Grid container align="center">
-
-                    {myRewards.map((reward, index) => {
-                      return (
-                        <Grid item xs={6} sm={3} key={index}>
-                          <DisplayReward nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
-
-                        </Grid>
-                      )
-                    })}
-                    <Button variant="contained" color="secondary" 
-                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
-                      onClick={() => claim()}
-                      >
-                      Claim
-                    </Button>
-                    
-                    </Grid>
-                    :
-                    null
-                    }
+            
 
               <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36"}}> Choose your fighter! </Typography>
 
-              <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", textAlign: "left"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
+              <Typography color="primary"  align="left" variant="caption" style={{color: "white", textAlign: "left"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
 
               <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
 
@@ -1164,20 +1149,7 @@ export default function Camp(props) {
 
                     
 
-                  <Grid container align="center">
-                    {roundRewards.length > 0 ?
-                    roundRewards.map((reward, index) => {
-                      return (
-                        <Grid item xs={4} sm={3} md={1} lg={1} key={index}>
-                          <DisplayReward nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
-
-                        </Grid>
-                      )
-                    })
-                    :
-                    null
-                    }
-                  </Grid>              
+                          
 
                   <Typography color="secondary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
 
@@ -1193,7 +1165,7 @@ export default function Camp(props) {
                 if (found) {
                   return (
                     <Grid key={index} item xs={6} sm={4} md={3} lg={3}>
-                    <DisplayMutant nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
+                    <DisplayMutant key={asset.index} nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
                     <Button variant="contained" color="secondary" 
                     style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
                     onClick={() => fight(asset.index, "withdrawl")}
@@ -1207,7 +1179,7 @@ export default function Camp(props) {
                 else {
                   return (
                     <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
-                    <DisplayMutant nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
+                    <DisplayMutant key={asset.index} nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
                     
                     <Button variant="contained" color="secondary" 
                       style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
@@ -1238,8 +1210,8 @@ export default function Camp(props) {
                 <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Prizes </Typography>
 
                 {round && contractRound ? 
-                  <div style={{padding: 40}}>
-                  <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", padding: 5, paddingLeft: 30}}> Time til next battle: {((732000 - (round - contractRound)) / 732000 * 4 * 7).toFixed(2)} more days </Typography>
+                  <div style={{padding: "20px 0"}}>
+                  <Typography color="primary"  align="left" variant="caption" style={{color: "white", padding: "5px, 0"}}> Time til next battle: {((732000 - (round - contractRound)) / 732000 * 4 * 7).toFixed(2)} more days </Typography>
 
                   <BorderLinearProgress variant="determinate" value={(round - contractRound) / 732000 * 100} />
                   {/* <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", padding: 5, paddingLeft: 30, maxWidth: 450}}> {((round - contractRound) / 732000 * 100).toFixed(2)} % </Typography> */}
@@ -1248,6 +1220,43 @@ export default function Camp(props) {
                   :
                   null
                   }
+
+                <Grid container align="center">
+                    {roundRewards.length > 0 ?
+                    roundRewards.map((reward, index) => {
+                      return (
+                        <Grid item xs={4} sm={3} md={3} lg={3} key={index}>
+                          <DisplayReward key={reward.assetId} nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
+
+                        </Grid>
+                      )
+                    })
+                    :
+                    null
+                    }
+                </Grid>   
+                {myRewards.length > 0 ?
+                    <Grid container align="center">
+
+                    {myRewards.map((reward, index) => {
+                      return (
+                        <Grid item xs={6} sm={3} key={index}>
+                          <DisplayReward key={reward.assetId} nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
+
+                        </Grid>
+                      )
+                    })}
+                    <Button variant="contained" color="secondary" 
+                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+                      onClick={() => claim()}
+                      >
+                      Claim
+                    </Button>
+                    
+                    </Grid>
+                    :
+                    null
+                }   
               </div>
               <div className="contestants-content" style={{position: "relative"}}>            
                   <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Contestants </Typography>
@@ -1257,7 +1266,7 @@ export default function Camp(props) {
                       {boxes.length > 0 ? boxes.map((box) => {
                           if (box.battle == battleNum) {
                             return (
-                              <DisplayMutant nftId={box.asset} round={round} sendDiscordMessage={props.sendDiscordMessage} contestant={true} />
+                              <DisplayMutant key={box.asset} nftId={box.asset} round={round} sendDiscordMessage={props.sendDiscordMessage} contestant={true} />
                             )
                           }
                       })
