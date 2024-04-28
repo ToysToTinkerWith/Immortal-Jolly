@@ -142,8 +142,8 @@ export default class DisplayReward extends React.Component {
             
                 return (
                     
-                        <div style={{borderRadius: 15}}  >
-                            <img style={{width: "100%",  borderRadius: 50, padding: 20, paddingBottom: 10}} src={this.state.nftUrl} /> 
+                        <div className="display-reward" style={{borderRadius: 15}}  >
+                            <img style={{borderRadius: 30, padding: 20, paddingBottom: 10}} src={this.state.nftUrl} /> 
                             <Typography color="secondary" align="center" variant="caption"> {this.props.amount > 1 ? this.props.amount : null} {this.state.nft.name} </Typography> 
 
                         </div>

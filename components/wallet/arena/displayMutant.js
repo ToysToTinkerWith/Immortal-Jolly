@@ -165,7 +165,7 @@ export default class DisplayMutant extends React.Component {
                 return (
                     <div style={{position: "relative"}}>
                         <div className="contestants-item" >
-                            <img style={{width: "85px", borderRadius: 25, marginBottom: "10px"}} src={this.state.nftUrl} /> 
+                            <img style={{width: "50%", borderRadius: 25, marginBottom: "10px"}} src={this.state.nftUrl} /> 
                             <Typography color="secondary" align="center" variant="caption" style={{padding: "5px"}}> {this.state.nft.name} </Typography>     
                             <Typography color="secondary" align="center" variant="caption" style={{padding: "5px"}}> {this.state.assetNFD} </Typography>     
                         </div>
@@ -180,7 +180,7 @@ export default class DisplayMutant extends React.Component {
                     <div style={{position: "relative"}}>
                     
                         <div style={{display: "grid", borderRadius: 15, padding: 10}}  >
-                            <img style={{width: "100%", borderRadius: 50, padding: 20, paddingBottom: 10}} src={this.state.nftUrl} /> 
+                            <img style={{width: "100%", borderRadius: 25}} src={this.state.nftUrl} /> 
                             <Typography color="secondary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
                         </div>
 

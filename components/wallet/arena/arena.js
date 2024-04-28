@@ -1059,211 +1059,215 @@ export default function Camp(props) {
       return (
           
         <div className="arena-body" style={{backgroundColor: "black", height: "100%"}}>
-
-        {myRewards.length > 0 ?
-                <Grid container align="center">
-
-                {myRewards.map((reward, index) => {
-                  return (
-                    <Grid item xs={6} sm={3} key={index}>
-                      <DisplayReward nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
-
-                    </Grid>
-                  )
-                })}
-                <Button variant="contained" color="secondary" 
-                  style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
-                  onClick={() => claim()}
-                  >
-                  Claim
-                </Button>
-                
-                </Grid>
-                :
-                null
-                }
-
-          <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", width: "95%"}}> Choose your fighter! </Typography>
-
-          <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", width: "95%", textAlign: "left"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
-
-          <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
-
-          {activeAccount && activeAccount.address == "LJGQE6GXIVKS4OGW4WCP7JXYJHHK5E4DNXDCOOQMLC4I57BNQR3FTUTSYA" ?
-          <div>
-          <Grid container spacing={3} align="center" style={{padding: 20, borderRadius: 15}}>
         
-         
-          <Grid item xs={12} sm={12} md={12} >
-          <TextField                
-            onChange={handleChange}
-            value={loadAsset}
-            multiline
-            type="number"
-            label="Load Asset ID"
-            name="loadAsset"
-            autoComplete="false"
-            InputProps={{ style: { color: "white", borderBottom: "1px solid white", marginRight: 20 } }}
-            InputLabelProps={{ style: { color: "white" } }}
-          
-            style={{
-            color: "white",
-            borderRadius: 15,
-            margin: "auto",
-            width: "30%"
-          
-            }}
-          />
-          <TextField                
-            onChange={handleChange}
-            value={loadAmount}
-            multiline
-            type="number"
-            label="Load Amount"
-            name="loadAmount"
-            autoComplete="false"
-            InputProps={{ style: { color: "white", borderBottom: "1px solid white", marginRight: 20 } }}
-            InputLabelProps={{ style: { color: "white"} }}
-          
-            style={{
-            color: "white",
-            borderRadius: 15,
-            margin: "auto",
-            width: "30%"
-          
-            }}
-          />
-          <Button variant="contained" color="secondary" 
-            style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", marginTop: 20}}
-            onClick={() => load()}
-            >
-            Load
-            </Button>
-          
+          <div className="arena-flex">
 
-          </Grid>
-        </Grid>
+            {myRewards.length > 0 ?
+                    <Grid container align="center">
 
-        {round - contractRound > 732000 ? 
-        <Button variant="contained" color="secondary" 
-          style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
-          onClick={() => reward(roundRewards)}
-          >
-        Reward
-        </Button>
-        :
-        null
-        }
+                    {myRewards.map((reward, index) => {
+                      return (
+                        <Grid item xs={6} sm={3} key={index}>
+                          <DisplayReward nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
 
-            </div>
-          :
-          null
-          }
-
-                
-
-              <Grid container align="center">
-                {roundRewards.length > 0 ?
-                roundRewards.map((reward, index) => {
-                  return (
-                    <Grid item xs={4} sm={3} md={2} lg={2} key={index}>
-                      <DisplayReward nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
-
+                        </Grid>
+                      )
+                    })}
+                    <Button variant="contained" color="secondary" 
+                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+                      onClick={() => claim()}
+                      >
+                      Claim
+                    </Button>
+                    
                     </Grid>
-                  )
-                })
-                :
-                null
-                }
-              </Grid>              
+                    :
+                    null
+                    }
 
-              <Typography color="secondary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
+              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36"}}> Choose your fighter! </Typography>
 
-    
-          <Grid container>
-          {assets.length > 0 ? assets.map((asset, index) => {
-            let found = false
-            boxes.forEach((box) => {
-              if (box.asset == asset.index && box.battle == battleNum) {
-                found = true
-              }
-            })
-            if (found) {
-              return (
-                <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
-                <DisplayMutant nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
-                <Button variant="contained" color="secondary" 
-                style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
-                onClick={() => fight(asset.index, "withdrawl")}
+              <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", textAlign: "left"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
+
+              <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
+
+              {activeAccount && activeAccount.address == "LJGQE6GXIVKS4OGW4WCP7JXYJHHK5E4DNXDCOOQMLC4I57BNQR3FTUTSYA" ?
+              <div>
+              <Grid container spacing={3} align="center" style={{padding: 20, borderRadius: 15}}>
+            
+            
+              <Grid item xs={12} sm={12} md={12} >
+              <TextField                
+                onChange={handleChange}
+                value={loadAsset}
+                multiline
+                type="number"
+                label="Load Asset ID"
+                name="loadAsset"
+                autoComplete="false"
+                InputProps={{ style: { color: "white", borderBottom: "1px solid white", marginRight: 20 } }}
+                InputLabelProps={{ style: { color: "white" } }}
+              
+                style={{
+                color: "white",
+                borderRadius: 15,
+                margin: "auto",
+                width: "30%"
+              
+                }}
+              />
+              <TextField                
+                onChange={handleChange}
+                value={loadAmount}
+                multiline
+                type="number"
+                label="Load Amount"
+                name="loadAmount"
+                autoComplete="false"
+                InputProps={{ style: { color: "white", borderBottom: "1px solid white", marginRight: 20 } }}
+                InputLabelProps={{ style: { color: "white"} }}
+              
+                style={{
+                color: "white",
+                borderRadius: 15,
+                margin: "auto",
+                width: "30%"
+              
+                }}
+              />
+              <Button variant="contained" color="secondary" 
+                style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", marginTop: 20}}
+                onClick={() => load()}
                 >
-                Withdraw
+                Load
                 </Button>
-                   
-                </Grid>
-              )
+              
+
+              </Grid>
+            </Grid>
+
+            {round - contractRound > 732000 ? 
+            <Button variant="contained" color="secondary" 
+              style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+              onClick={() => reward(roundRewards)}
+              >
+            Reward
+            </Button>
+            :
+            null
             }
-            else {
-              return (
-                <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
-                <DisplayMutant nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
-                
-                <Button variant="contained" color="secondary" 
-                   style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
-                   onClick={() => fight(asset.index, "fight")}
-                   >
-                   Fight
-                   </Button>
-                </Grid>
-              )
-            }
-            
-          })
-          :
-          <div style={{display: "flex"}}>
-            <Typography style={{margin: 30}} color="secondary"> {message} </Typography>
-            <CircularProgress variant="determinate" color="secondary" value={progress} />
-
-          </div>
-          }
-         
-            
-         </Grid>
-           
-            <br />
-            <div className="prizes-content">
-              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Prizes </Typography>
-
-              {round && contractRound ? 
-                <div style={{padding: 40}}>
-                <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", padding: 5, paddingLeft: 30}}> Time til next battle: {((732000 - (round - contractRound)) / 732000 * 4 * 7).toFixed(2)} more days </Typography>
-
-                <BorderLinearProgress variant="determinate" value={(round - contractRound) / 732000 * 100} />
-                {/* <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", padding: 5, paddingLeft: 30, maxWidth: 450}}> {((round - contractRound) / 732000 * 100).toFixed(2)} % </Typography> */}
 
                 </div>
-                :
-                null
-                }
-            </div>
-            <div className="contestants-content" style={{position: "relative"}}>            
-                <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Contestants </Typography>
+              :
+              null
+              }
 
-                <div style={{backgroundColor: "#1a1a1a", borderRadius: 15}} className="scrollable-content">
-                  <div className="scrollable-content-inner">
-                    {boxes.length > 0 ? boxes.map((box) => {
-                        if (box.battle == battleNum) {
-                          return (
-                            <DisplayMutant nftId={box.asset} round={round} sendDiscordMessage={props.sendDiscordMessage} contestant={true} />
-                          )
-                        }
+                    
+
+                  <Grid container align="center">
+                    {roundRewards.length > 0 ?
+                    roundRewards.map((reward, index) => {
+                      return (
+                        <Grid item xs={4} sm={3} md={1} lg={1} key={index}>
+                          <DisplayReward nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
+
+                        </Grid>
+                      )
                     })
                     :
                     null
                     }
-                  </div>
-                </div>
-            </div>
+                  </Grid>              
 
+                  <Typography color="secondary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
+
+        
+              <Grid container>
+              {assets.length > 0 ? assets.map((asset, index) => {
+                let found = false
+                boxes.forEach((box) => {
+                  if (box.asset == asset.index && box.battle == battleNum) {
+                    found = true
+                  }
+                })
+                if (found) {
+                  return (
+                    <Grid key={index} item xs={6} sm={4} md={3} lg={3}>
+                    <DisplayMutant nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
+                    <Button variant="contained" color="secondary" 
+                    style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+                    onClick={() => fight(asset.index, "withdrawl")}
+                    >
+                    Withdraw
+                    </Button>
+                      
+                    </Grid>
+                  )
+                }
+                else {
+                  return (
+                    <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
+                    <DisplayMutant nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
+                    
+                    <Button variant="contained" color="secondary" 
+                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+                      onClick={() => fight(asset.index, "fight")}
+                      >
+                      Fight
+                      </Button>
+                    </Grid>
+                  )
+                }
+                
+              })
+              :
+              <div style={{display: "flex"}}>
+                <Typography style={{margin: 30}} color="secondary"> {message} </Typography>
+                <CircularProgress variant="determinate" color="secondary" value={progress} />
+
+              </div>
+              }
+            
+                
+            </Grid>
+              
+                <br />
+          </div>     
+            <div className="arena-flex">
+              <div className="prizes-content">
+                <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Prizes </Typography>
+
+                {round && contractRound ? 
+                  <div style={{padding: 40}}>
+                  <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", padding: 5, paddingLeft: 30}}> Time til next battle: {((732000 - (round - contractRound)) / 732000 * 4 * 7).toFixed(2)} more days </Typography>
+
+                  <BorderLinearProgress variant="determinate" value={(round - contractRound) / 732000 * 100} />
+                  {/* <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", padding: 5, paddingLeft: 30, maxWidth: 450}}> {((round - contractRound) / 732000 * 100).toFixed(2)} % </Typography> */}
+
+                  </div>
+                  :
+                  null
+                  }
+              </div>
+              <div className="contestants-content" style={{position: "relative"}}>            
+                  <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Contestants </Typography>
+
+                  <div style={{backgroundColor: "#1a1a1a", borderRadius: 15}} className="scrollable-content">
+                    <div className="scrollable-content-inner">
+                      {boxes.length > 0 ? boxes.map((box) => {
+                          if (box.battle == battleNum) {
+                            return (
+                              <DisplayMutant nftId={box.asset} round={round} sendDiscordMessage={props.sendDiscordMessage} contestant={true} />
+                            )
+                          }
+                      })
+                      :
+                      null
+                      }
+                    </div>
+                  </div>
+              </div>
+            </div>        
 
         </div>
     )

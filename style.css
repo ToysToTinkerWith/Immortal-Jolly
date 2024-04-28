@@ -37,9 +37,37 @@ html {
   scrollbar-width: none; /* Firefox */
 }
 
+html, body, .main {
+  height: 100%;
+  background: black;
+}
+
+#__next {
+  height: 100%;
+}
+
+.arena-body {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.arena-flex {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 50%;
+  margin-left: 10px;
+}
 @media (max-width: 500px) {
     body {
         min-width: fit-content;
+    }
+    .arena-flex {
+      display: flex;
+      flex-direction: column;
+      justify-content: left;
+      width: 100%;
     }
     .contestants-item {
       flex-direction: column; /* Stack children in a column for mobile screens */
@@ -58,9 +86,8 @@ html {
     .arena-body {
       display: flex;
       flex-direction: column;
-      align-content: center;
-      justify-content: center;
-      align-items: center;
+      align-content: left;
+      align-items: left;
     }
     .scrollable-content {
       border-radius: 15px;
