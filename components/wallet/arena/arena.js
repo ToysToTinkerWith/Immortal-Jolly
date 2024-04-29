@@ -1222,7 +1222,7 @@ export default function Camp(props) {
                     {roundRewards.length > 0 ?
                     roundRewards.map((reward, index) => {
                       return (
-                        <Grid item xs={4} sm={3} md={3} lg={3} key={index} style={{margin: "0 10px 40px"}}>
+                        <Grid item xs={4} sm={3} md={3} lg={3} key={index} style={{margin: "0 20px 40px"}}>
                           <DisplayReward key={reward.assetId} nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
 
                         </Grid>

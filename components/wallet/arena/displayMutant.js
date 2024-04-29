@@ -167,7 +167,7 @@ export default class DisplayMutant extends React.Component {
                         <div className="contestants-item" >
                             <img className="contestant-img" src={this.state.nftUrl} /> 
                             <div className="contestant-text">
-                                <Typography color="secondary" align="center" variant="caption" style={{marginRight: "15px"}}> {this.state.nft.name} </Typography>     
+                                <Typography className="asset-name" color="secondary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
                                 <Typography color="secondary" align="center" variant="caption"> {this.state.assetNFD} </Typography>   
                             </div>
                         </div>
