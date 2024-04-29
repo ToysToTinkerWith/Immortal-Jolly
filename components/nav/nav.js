@@ -35,53 +35,41 @@ export default class Nav extends React.Component {
   // Render account information and "connect", "set active", and "disconnect" buttons.
   // Finally, map through the `accounts` property to render a dropdown for each connected account.
   render() {
+    const isMobile = this.state.width < 600;
     return (
-
-
-      <div style={{backgroundColor: "#FFFFFD"}}>
-          <Grid container>
-              <Grid item xs={2} sm={2} md={2}>
-                <Button style={{display: "flex", margin: "auto"}} onClick={() => this.props.setPage("map")}>
-                  <img src={"./logo.png"} style={{width: this.state.width > 600 ? 100 : 60}} />
-                </Button>
-              </Grid>
-              {this.state.width < 600 ?
-                <Grid item  xs={9} sm={3} md={3}>
-                  <CombineAll activeAccount={this.props.activeAccount} setPage={this.props.setPage} open={this.props.page == "connect" ? true : false} page={this.props.page}/>
-                </Grid>
-                :
-              <>
-              
-              <Grid item xs={12} sm={3} md={3}>
-                <br />
-                <Button style={{float: "right", margin: 10}} disabled={!this.props.activeAccount} onClick={() => this.props.setPage("collection")}>
-                  <Typography> Collection </Typography>
-                </Button>            
-              </Grid>
-              
-  
-              <Grid item xs={12} sm={3} md={3}>
-                <br />
-              <Button 
-              style={{float: "right", margin: 10}} 
-              onClick={() => window.open("https://immortaljolly.com/")}
-              >
-                <Typography> Immortal Jolly </Typography>
-  
-              </Button>  
-            </Grid>
-             
-              <Grid item xs={12} sm={3} md={3}>
-                <br />
-                <Connect activeAccount={this.props.activeAccount} page={this.props.page} open={this.props.page == "connect" ? true : false} setPage={this.props.setPage} />
-              </Grid>
-              </>
-              }
-              
-  
+      <div style={{ backgroundColor: "#FFFFFD" }}>
+        <Grid container alignItems="center" justifyContent="space-between" style={{ padding: '0 20px' }}>
+          <Grid item xs={isMobile ? 4 : 2}>
+            <Button onClick={() => this.props.setPage("map")}>
+              <img src={"./logo.png"} alt="logo" style={{ width: isMobile ? '150px' : '300px' }} />
+            </Button>
           </Grid>
+          
+          {!isMobile && (
+            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: "150px" }}>
+              <Button disabled={!this.props.activeAccount} onClick={() => this.props.setPage("collection")}>
+                <Typography> Collection </Typography>
+              </Button>
+              <Button onClick={() => window.open("https://immortaljolly.com/")}>
+                <Typography> Immortal Jolly </Typography>
+              </Button>
+              <Connect activeAccount={this.props.activeAccount} page={this.props.page} open={this.props.page === "connect"} setPage={this.props.setPage} />
+            </div>
+            
+          )}
+            <div style={{ display: 'flex', justifyContent: 'end' }}>
+            {isMobile ? (
+              <CombineAll activeAccount={this.props.activeAccount} setPage={this.props.setPage} open={this.props.page === "connect"} page={this.props.page} />
+            ) : (
+              <>
+              </>
+            )}
+            </div>
+          
+        </Grid>
       </div>
-    )
+    );
   }
+  
   
 }

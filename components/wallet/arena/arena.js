@@ -1121,7 +1121,7 @@ export default function Camp(props) {
                 }}
               />
               <Button variant="contained" color="secondary" 
-                style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", marginTop: 20}}
+                style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", marginTop: 20, borderRadius: "50px"}}
                 onClick={() => load()}
                 >
                 Load
@@ -1133,7 +1133,7 @@ export default function Camp(props) {
 
             {round - contractRound > 732000 ? 
             <Button variant="contained" color="secondary" 
-              style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+              style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", borderRadius: "50px"}}
               onClick={() => reward(roundRewards)}
               >
             Reward
@@ -1160,7 +1160,7 @@ export default function Camp(props) {
                     <Grid key={index} item xs={6} sm={4} md={3} lg={3} style={{display: "flex", flexDirection: "column", alignItems: "center", maxWidth: "fit-content"}}>
                     <DisplayMutant key={asset.index} nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
                     <Button variant="contained" color="secondary" 
-                    style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+                    style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", borderRadius: "50px"}}
                     onClick={() => fight(asset.index, "withdrawl")}
                     >
                     Withdraw
@@ -1175,7 +1175,7 @@ export default function Camp(props) {
                     <DisplayMutant key={asset.index} nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
                     
                     <Button variant="contained" color="secondary" 
-                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", borderRadius: "50px"}}
                       onClick={() => fight(asset.index, "fight")}
                       >
                       Fight
@@ -1244,7 +1244,7 @@ export default function Camp(props) {
                       )
                     })}
                     <Button variant="contained" color="secondary" 
-                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
+                      style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", borderRadius: "50px"}}
                       onClick={() => claim()}
                       >
                       Claim

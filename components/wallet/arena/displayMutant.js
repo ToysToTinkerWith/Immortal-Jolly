@@ -183,7 +183,7 @@ export default class DisplayMutant extends React.Component {
                     
                         <div style={{display: "grid", borderRadius: 15, padding: 10}} style={{display: "flex", flexDirection: "column", alignItems: "center", margin: "0 10px"}} >
                             <img className="holder-img" style={{width: "100%", borderRadius: 25}} src={this.state.nftUrl} /> 
-                            <Typography color="secondary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
+                            <Typography color="secondary" align="center" variant="caption" style={{margin: "10px 0"}}> {this.state.nft.name} </Typography>     
                         </div>
 
                     
