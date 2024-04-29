@@ -35,7 +35,7 @@ export default function Map(props) {
 
     if (windowDimensions.innerHeight != 0) {
         return (
-            <div style={{position: "relative"}} >
+            <div style={{position: "relative", height: "100%"}} >
                 <Button style={{position: "absolute", left: windowDimensions.width > 600 ? "18%" : "7%", top: windowDimensions.width > 600 ? "20%" : "31%"}} 
                 onMouseEnter={() => setCampHovered(true)}
                 onMouseLeave={() => setCampHovered(false)} 
@@ -48,7 +48,7 @@ export default function Map(props) {
                     :
                     null
                     }
-                <img src={"camp.png"} style={{width: windowDimensions.width > 600 ? "15vw": "20vw"}} />
+                <img src={"camp.png"} style={{width: windowDimensions.width > 600 ? "13vw": "20vw"}} />
                 </Button>
     
                 <Button style={{position: "absolute", left: windowDimensions.width > 600 ? "58%" : "65%", top: windowDimensions.width > 600 ? "23%" : "33%"}} 
@@ -64,7 +64,7 @@ export default function Map(props) {
                     :
                     null
                     }
-                <img src={"arena.png"} style={{width: windowDimensions.width > 600 ? "15vw" : "20vw"}} />
+                <img src={"arena.png"} style={{width: windowDimensions.width > 600 ? "13vw" : "20vw"}} />
                 </Button>
     
                 <Button style={{position: "absolute", left: windowDimensions.width > 600 ?  "27%" : "20%", top: windowDimensions.width > 600 ? "44%" : "47%"}} 
@@ -80,7 +80,7 @@ export default function Map(props) {
                     :
                     null
                     }
-                <img src={"shrine.png"} style={{width: windowDimensions.width > 600 ? "15vw" : "20vw"}} />
+                <img src={"shrine.png"} style={{width: windowDimensions.width > 600 ? "13vw" : "20vw"}} />
                 </Button>
     
                 <Button style={{position: "absolute", left: windowDimensions.width > 600 ? "50%" : "54%", top: windowDimensions.width > 600 ? "60%" : "57%"}} 
@@ -96,7 +96,7 @@ export default function Map(props) {
                     :
                     null
                     }
-                <img src={"obelisk.png"} style={{width: windowDimensions.width > 600 ? "15vw" : "20vw"}} />
+                <img src={"obelisk.png"} style={{width: windowDimensions.width > 600 ? "13vw" : "20vw"}} />
                 </Button>
     
                 {windowDimensions.width > 600 ? 

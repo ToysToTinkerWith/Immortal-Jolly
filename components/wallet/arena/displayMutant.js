@@ -166,8 +166,10 @@ export default class DisplayMutant extends React.Component {
                     <div style={{position: "relative"}}>
                         <div className="contestants-item" >
                             <img className="contestant-img" src={this.state.nftUrl} /> 
-                            <Typography color="secondary" align="center" variant="caption" style={{padding: "5px"}}> {this.state.nft.name} </Typography>     
-                            <Typography color="secondary" align="center" variant="caption" style={{padding: "5px"}}> {this.state.assetNFD} </Typography>     
+                            <div className="contestant-text">
+                                <Typography color="secondary" align="center" variant="caption" style={{marginRight: "15px"}}> {this.state.nft.name} </Typography>     
+                                <Typography color="secondary" align="center" variant="caption"> {this.state.assetNFD} </Typography>   
+                            </div>
                         </div>
                     </div>
                   
@@ -177,10 +179,10 @@ export default class DisplayMutant extends React.Component {
 
             else {
                 return (
-                    <div style={{position: "relative"}}>
+                    <div style={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center"}}>
                     
-                        <div style={{display: "grid", borderRadius: 15, padding: 10}}  >
-                            <img style={{width: "100%", borderRadius: 25}} src={this.state.nftUrl} /> 
+                        <div style={{display: "grid", borderRadius: 15, padding: 10}} style={{display: "flex", flexDirection: "column", alignItems: "center", margin: "0 10px"}} >
+                            <img className="holder-img" style={{width: "100%", borderRadius: 25}} src={this.state.nftUrl} /> 
                             <Typography color="secondary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
                         </div>
 

@@ -1070,11 +1070,11 @@ export default function Camp(props) {
 
             
 
-              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36"}}> Choose your fighter! </Typography>
+              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", margin: "40px 0"}}> Choose your fighter! </Typography>
 
-              <Typography color="primary"  align="left" variant="caption" style={{color: "white", textAlign: "left"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
+              <Typography color="primary"  align="left" variant="caption" style={{color: "white", textAlign: "left", marginBottom: "46px"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
 
-              <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
+              
 
               {activeAccount && activeAccount.address == "LJGQE6GXIVKS4OGW4WCP7JXYJHHK5E4DNXDCOOQMLC4I57BNQR3FTUTSYA" ?
               <div>
@@ -1145,15 +1145,8 @@ export default function Camp(props) {
                 </div>
               :
               null
-              }
+              }       
 
-                    
-
-                          
-
-                  <Typography color="secondary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
-
-        
               <Grid container>
               {assets.length > 0 ? assets.map((asset, index) => {
                 let found = false
@@ -1164,7 +1157,7 @@ export default function Camp(props) {
                 })
                 if (found) {
                   return (
-                    <Grid key={index} item xs={6} sm={4} md={3} lg={3}>
+                    <Grid key={index} item xs={6} sm={4} md={3} lg={3} style={{display: "flex", flexDirection: "column", alignItems: "center", maxWidth: "fit-content"}}>
                     <DisplayMutant key={asset.index} nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
                     <Button variant="contained" color="secondary" 
                     style={{backgroundColor: "#ffffff", display: "flex", margin: "auto"}}
@@ -1202,18 +1195,22 @@ export default function Camp(props) {
             
                 
             </Grid>
+
+            <Typography color="primary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
+
+            <Typography color="secondary"  align="left" variant="subtitle1" style={{padding: 5, paddingLeft: 30, maxWidth: 450}}> {confirm} </Typography>
               
                 <br />
           </div>     
             <div className="arena-flex">
               <div className="prizes-content">
-                <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Prizes </Typography>
+                <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left", margin: "40px 0"}}> Prizes </Typography>
 
                 {round && contractRound ? 
-                  <div style={{padding: "20px 0"}}>
+                  <div style={{padding: "0 0 40px"}}>
                   <Typography color="primary"  align="left" variant="caption" style={{color: "white", padding: "5px, 0"}}> Time til next battle: {((732000 - (round - contractRound)) / 732000 * 4 * 7).toFixed(2)} more days </Typography>
 
-                  <BorderLinearProgress variant="determinate" value={(round - contractRound) / 732000 * 100} />
+                  <BorderLinearProgress variant="determinate" value={(round - contractRound) / 732000 * 100} style={{maxWidth: '600px'}}/>
                   {/* <Typography color="primary"  align="left" variant="subtitle1" style={{color: "white", padding: 5, paddingLeft: 30, maxWidth: 450}}> {((round - contractRound) / 732000 * 100).toFixed(2)} % </Typography> */}
 
                   </div>
@@ -1225,7 +1222,7 @@ export default function Camp(props) {
                     {roundRewards.length > 0 ?
                     roundRewards.map((reward, index) => {
                       return (
-                        <Grid item xs={4} sm={3} md={3} lg={3} key={index}>
+                        <Grid item xs={4} sm={3} md={3} lg={3} key={index} style={{margin: "0 10px 40px"}}>
                           <DisplayReward key={reward.assetId} nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
 
                         </Grid>
@@ -1259,7 +1256,7 @@ export default function Camp(props) {
                 }   
               </div>
               <div className="contestants-content" style={{position: "relative"}}>            
-                  <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left"}}> Contestants </Typography>
+                  <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left", margin: "0 0 30px"}}> Contestants </Typography>
 
                   <div style={{backgroundColor: "#1a1a1a", borderRadius: 15}} className="scrollable-content">
                     <div className="scrollable-content-inner">
