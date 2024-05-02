@@ -282,11 +282,7 @@ export default function Camp(props) {
                 const contractAssets = await indexerClient.lookupAccountAssets(contractAccount).do();
 
                 //need to convert to empty array
-                let rewards = [
-                  { assetId: 660889851, amount: 1 },
-                  { assetId: 660889849, amount: 1 },
-                  { assetId: 660892698, amount: 1 }
-                ];
+                let rewards = [];
 
                 contractAssets.assets.forEach((asset) => {
                   rewards.push({assetId: asset["asset-id"], amount: asset.amount})
