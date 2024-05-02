@@ -25,111 +25,52 @@ export default class DisplayReward extends React.Component {
     }
 
     async componentDidMount() {
-
-        
         try {
-
-        if (this.props.nftId) {
-            let response = await fetch('/api/getNft', {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    nftId: this.props.nftId
-                  }),
-                
-                    
+            if (this.props.nftId) {
+                const response = await fetch('/api/getNft', {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nftId: this.props.nftId })
                 });
-            
-            let session = await response.json()
-
-            console.log(session)
-
-            let nftUrl
-
-            if (this.props.nftId == 877451592) {
-                nftUrl = "/cursedgold.png"
-            }
-            else if (this.props.nftId == 877451592) {
-                nftUrl = "/cursedgold.png"
-            }
-            else if(session.assets[0].params["unit-name"] == "MUSHI27") {
-                nftUrl = "https://ipfs.algonode.xyz/ipfs/" + "QmfMC91vxxffd5yxeCsXHQHbxAvkc2casgrzEmUMKcA25V"
-
-            }
-            else if(session.assets[0].params.url.substring(0,13) == "template-ipfs") {
-
-                const addr = algosdk.decodeAddress(session.assets[0].params.reserve)
-
-                const mhdigest = digest.create(mfsha2.sha256.code, addr.publicKey)
-
-                const cid = CID.create(1, 0x55, mhdigest)
-
-                await fetch("https://ipfs.algonode.xyz/ipfs/" + cid.toString())
-                .then(async (response) => {
-                let hoomenData = await response.json()
-                let ipfs = hoomenData.image.substring(7)
-
-
-                nftUrl = "https://ipfs.algonode.xyz/ipfs/" + ipfs
-
                 
-                })
-
-
-            }
-            else {
-                nftUrl = "https://ipfs.algonode.xyz/ipfs/" + session.assets[0].params.url.slice(7)
-            }
-
-            console.log(nftUrl)
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
     
-            
-            this.setState({
-                nft: session.assets[0].params,
-                nftUrl: nftUrl,
-            })
-            
-           
+                const session = await response.json();
+                let nftUrl = "";
+                
+                // Check if it's a special case with a hardcoded image
+                if (this.props.nftId === 877451592) {
+                    nftUrl = "/cursedgold.png";
+                } else if(session.assets[0].params["unit-name"] === "MUSHI27") {
+                    nftUrl = "https://ipfs.algonode.xyz/ipfs/QmfMC91vxxffd5yxeCsXHQHbxAvkc2casgrzEmUMKcA25V";
+                } else {
+                    const ipfsPrefix = 'https://ipfs.algonode.xyz/ipfs/';
+                    let urlPath = session.assets[0].params.url;
     
-            const token = {
-                'X-API-Key': process.env.indexerKey
-            }
-      
-            const client = new algosdk.Algodv2('', 'https://mainnet-api.algonode.cloud', 443)
-
-            try {
-                let assetbox = await client.getApplicationBoxByName(this.state.contract, algosdk.encodeUint64(this.props.nftId)).do();
-                var length = assetbox.value.length;
-        
-                let buffer = Buffer.from(assetbox.value);
-                var result = buffer.readUIntBE(0, length);
-        
-        
+                    // Check if the urlPath includes a domain, and strip it
+                    if (urlPath.includes('ipfs.io/ipfs/')) {
+                        urlPath = urlPath.split('ipfs.io/ipfs/')[1];
+                    }
+    
+                    nftUrl = `${ipfsPrefix}${urlPath}`;
+                }
+    
+                console.log(nftUrl); // Debugging to see the final URL
                 this.setState({
-                    cashRound: result
-                })
-
+                    nft: session.assets[0].params,
+                    nftUrl: nftUrl,
+                });
+    
             }
-            catch {
-
-            }
+        } catch (error) {
+            console.error('Error fetching NFT details:', error);
+            this.props.sendDiscordMessage(error.toString(), "Display Reward Fetch");
+        }
+    }
     
       
-    
-           
-    
-        }
-        }
-        catch (error) {
-            this.props.sendDiscordMessage(error, "Display Reward Fetch")
-          }
-
-        
-          
-      }
-
       
 
 
@@ -142,9 +83,9 @@ export default class DisplayReward extends React.Component {
             
                 return (
                     
-                        <div style={{borderRadius: 15}}  >
-                            <img style={{width: "100%",  borderRadius: 50, padding: 20, paddingBottom: 10}} src={this.state.nftUrl} /> 
-                            <Typography color="secondary" align="center" variant="caption"> {this.props.amount > 1 ? this.props.amount : null} {this.state.nft.name} </Typography> 
+                        <div className="display-reward"  >
+                            <img className="reward-img" src={this.state.nftUrl} /> 
+                            <Typography color="secondary" align="center" variant="caption" style={{margin: "10px 0"}}> {this.props.amount > 1 ? this.props.amount : null} {this.state.nft.name} </Typography> 
 
                         </div>
 

@@ -72,17 +72,42 @@ export default class DisplayMutant extends React.Component {
 
             assetBalances.balances.forEach(async (balance) => {
                 if (balance.amount == 1) {
-                    const response = await fetch('https://api.nf.domains/nfd/lookup?address=' + balance.address, {
-                        method: 'GET',
-                        headers: {},
-                    });
-                    const data = await response.json();
-                    console.log(data)
-                    this.setState({
-                        assetNFD: data[String(balance.address)].name
-                    })
+                    const url = 'https://api.nf.domains/nfd/lookup?address=' + balance.address;
+                    console.log("Fetching URL:", url);  // Log the URL being fetched
+            
+                    try {
+                        const response = await fetch(url, {
+                            method: 'GET',
+                            headers: {},
+                        });
+            
+                        if (!response.ok) {  // Check if the response was successful
+                            console.error("Failed to fetch:", response.status, response.statusText);
+                            return;  // Exit the function if response is not OK
+                        }
+            
+                        const text = await response.text();  // First get the response as text
+                        console.log("Raw response text:", text);  // Log the raw text response
+            
+                        try {
+                            const data = JSON.parse(text);  // Try parsing the text as JSON
+                            console.log("Parsed data:", data);  // Log the parsed data
+            
+                            if (data && data[balance.address]) {  // Check if data is valid and contains expected key
+                                this.setState({
+                                    assetNFD: data[balance.address].name  // Update state with the name
+                                });
+                            } else {
+                                console.log("Data does not contain expected key:", balance.address);
+                            }
+                        } catch (error) {
+                            console.error("Error parsing JSON:", error);  // Log parsing errors
+                        }
+                    } catch (error) {
+                        console.error("Error fetching data:", error);  // Log fetch errors
+                    }
                 }
-            })
+            });            
 
     
     
@@ -139,32 +164,26 @@ export default class DisplayMutant extends React.Component {
 
                 return (
                     <div style={{position: "relative"}}>
-                    
-                        <div style={{display: "grid", borderRadius: 15, padding: 10}}  >
-                            <img style={{width: "100%", borderRadius: 50, padding: 20, paddingBottom: 10}} src={this.state.nftUrl} /> 
-                            <Typography color="secondary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
-                            <Typography color="secondary" align="center" variant="caption"> {this.state.assetNFD} </Typography>     
-
+                        <div className="contestants-item" >
+                            <img className="contestant-img" src={this.state.nftUrl} /> 
+                            <div className="contestant-text">
+                                <Typography className="asset-name" color="secondary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
+                                <Typography color="secondary" align="center" variant="caption"> {this.state.assetNFD} </Typography>   
+                            </div>
                         </div>
-
-                    
-                   
-                   
-
-                    
                     </div>
-        
+                  
                 )
 
             }
 
             else {
                 return (
-                    <div style={{position: "relative"}}>
+                    <div style={{position: "relative", display: "flex", flexDirection: "column", alignItems: "center"}}>
                     
-                        <div style={{display: "grid", borderRadius: 15, padding: 10}}  >
-                            <img style={{width: "100%", borderRadius: 50, padding: 20, paddingBottom: 10}} src={this.state.nftUrl} /> 
-                            <Typography color="secondary" align="center" variant="caption"> {this.state.nft.name} </Typography>     
+                        <div style={{display: "grid", borderRadius: 15, padding: 10}} style={{display: "flex", flexDirection: "column", alignItems: "center", margin: "0 10px"}} >
+                            <img className="holder-img" style={{width: "100%", borderRadius: 25}} src={this.state.nftUrl} /> 
+                            <Typography color="secondary" align="center" variant="caption" style={{margin: "10px 0"}}> {this.state.nft.name} </Typography>     
                         </div>
 
                     

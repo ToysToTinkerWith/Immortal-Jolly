@@ -263,6 +263,8 @@ export default function Camp(props) {
 
             const res1 = await addr1.json()
 
+            console.log('created assets response: ', res1);
+
             res1.assets.forEach((asset) => {
               if (accountAssets.includes(asset.index)) {
               jollys.push({asset: asset, reward: 5})
@@ -343,6 +345,7 @@ export default function Camp(props) {
     
         
         return (
+          <div className="collection-body" style={{background: "white", height: "100%"}}>
           
             <div >
               <Button variant="outlined" style={{margin: 20, backgroundColor: tab == "jollies" ? "#000000" : null, color: tab == "jollies" ? "#FFFFFF" : null}} onClick={() => setTab("jollies")}> Jollies </Button>
@@ -422,6 +425,7 @@ export default function Camp(props) {
                 
 
             </div>
+          </div>
         )
     
 }

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@blockshake/defly-connect": "^1.0.0",
+    "@daffiwallet/connect": "^1.0.3",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@json-rpc-tools/utils": "^1.7.6",

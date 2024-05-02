@@ -23,7 +23,7 @@ export default function Index(props) {
    
 
         return (
-            <div >
+            <div className="main">
                 <Head>
                 <title>Immortal Jolly</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
