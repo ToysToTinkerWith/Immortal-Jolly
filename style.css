@@ -39,7 +39,10 @@ html {
 
 html, body, .main {
   height: 100%;
-  background: black;
+}
+
+html {
+  background-color: black;
 }
 
 #__next {
@@ -142,6 +145,7 @@ html, body, .main {
       flex-direction: column;
       align-content: left;
       align-items: left;
+      background-attachment: fixed;
     }
     .scrollable-content {
       border-radius: 15px;
