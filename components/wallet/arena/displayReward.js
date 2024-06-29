@@ -46,6 +46,7 @@ export default class DisplayReward extends React.Component {
                 } else if(session.assets[0].params["unit-name"] === "MUSHI27") {
                     nftUrl = "https://ipfs.algonode.xyz/ipfs/QmfMC91vxxffd5yxeCsXHQHbxAvkc2casgrzEmUMKcA25V";
                 } else {
+                    console.log(session.assets[0].params)
                     const ipfsPrefix = 'https://ipfs.algonode.xyz/ipfs/';
                     let urlPath = session.assets[0].params.url;
     
@@ -53,11 +54,14 @@ export default class DisplayReward extends React.Component {
                     if (urlPath.includes('ipfs.io/ipfs/')) {
                         urlPath = urlPath.split('ipfs.io/ipfs/')[1];
                     }
+
+                    if (urlPath.includes('ipfs://')) {
+                        urlPath = urlPath.split('ipfs://')[1];
+                    }
     
                     nftUrl = `${ipfsPrefix}${urlPath}`;
                 }
     
-                console.log(nftUrl); // Debugging to see the final URL
                 this.setState({
                     nft: session.assets[0].params,
                     nftUrl: nftUrl,
@@ -65,7 +69,6 @@ export default class DisplayReward extends React.Component {
     
             }
         } catch (error) {
-            console.error('Error fetching NFT details:', error);
             this.props.sendDiscordMessage(error.toString(), "Display Reward Fetch");
         }
     }

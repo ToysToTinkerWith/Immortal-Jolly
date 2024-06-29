@@ -21,7 +21,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function Camp(props) { 
+export default function Arena(props) { 
 
   const { activeAccount, signTransactions, sendTransactions } = useWallet()
 
@@ -282,11 +282,7 @@ export default function Camp(props) {
                 const contractAssets = await indexerClient.lookupAccountAssets(contractAccount).do();
 
                 //need to convert to empty array
-                let rewards = [
-                  { assetId: 660889851, amount: 1 },
-                  { assetId: 660889849, amount: 1 },
-                  { assetId: 660892698, amount: 1 }
-                ];
+                let rewards = [];
 
                 contractAssets.assets.forEach((asset) => {
                   rewards.push({assetId: asset["asset-id"], amount: asset.amount})
@@ -556,7 +552,7 @@ export default function Camp(props) {
 
     try {
 
-    setConfirm("Sending Transaction...")
+    setConfirm("Sign Transaction...")
 
 
     const token = {
@@ -631,9 +627,6 @@ export default function Camp(props) {
           }
         })
 
-        console.log("mutants: ", mutants);
-
-
         let multi
 
         if (name.substring(0, 5) == "Omega") {
@@ -660,6 +653,43 @@ export default function Camp(props) {
 
       let winner = Math.floor(Math.random() * battleBoxes.length)
 
+      const assetBalances = await indexerClient.lookupAssetBalances(battleBoxes[winner].asset).do();
+
+      let assetNFD = ""
+
+      assetBalances.balances.forEach(async (balance) => {
+          if (balance.amount == 1) {
+              const url = 'https://api.nf.domains/nfd/lookup?address=' + balance.address;
+      
+              try {
+                  const response = await fetch(url, {
+                      method: 'GET',
+                      headers: {},
+                  });
+      
+                  if (!response.ok) {  // Check if the response was successful
+                      console.error("Failed to fetch:", response.status, response.statusText);
+                      return;  // Exit the function if response is not OK
+                  }
+      
+                  const text = await response.text();  // First get the response as text
+      
+                  try {
+                      const data = JSON.parse(text);  // Try parsing the text as JSON
+      
+                      if (data && data[balance.address]) {  // Check if data is valid and contains expected key
+                            assetNFD = data[balance.address].name  // Update state with the name
+                            
+                          
+                      } else {
+                      }
+                  } catch (error) {
+                  }
+              } catch (error) {
+              }
+          }
+      });     
+
       let winningBox = battleBoxes[winner].boxName
 
       let response = await fetch('/api/getNft', {
@@ -676,7 +706,17 @@ export default function Camp(props) {
     
       let session = await response.json()
 
-      let winnerImg = "https://ipfs.algonft.tools/ipfs/" + session.assets[0].params.url.slice(7)
+      let winnerImg
+
+      if (session.assets[0].params.url.slice(0, 21) == "https://ipfs.io/ipfs/") {
+        winnerImg = "https://ipfs.algonode.xyz/ipfs/" + session.assets[0].params.url.slice(21)
+    }
+    else {
+        winnerImg = "https://ipfs.algonode.xyz/ipfs/" + session.assets[0].params.url.slice(7)
+
+    }
+
+
 
 
       const boxResponse = await indexerClient.lookupApplicationBoxByIDandName(contract, winningBox).do();
@@ -729,8 +769,6 @@ export default function Camp(props) {
           encodedTxns.push(encoded)
   
         })
-
-        
   
         const signedTransactions = await signTransactions(encodedTxns)
 
@@ -746,7 +784,8 @@ export default function Camp(props) {
         {
           object: battleBoxes[winner],
           address: address,
-          img: winnerImg
+          img: winnerImg,
+          NFD: assetNFD
         },
         {
           object: allBoxes[mostKills],
@@ -777,8 +816,11 @@ export default function Camp(props) {
     
     embeds.push({
       "title" : "Winner of Arena: " + Winner.object.name,
-      
+      "image": {
+                    "url": String(Winner.img)
+                },
       "description" : "Congratulations " + Winner.address + 
+      "\n "  + Winner.NFD +
       "\n Please claim your rewards from the Arena."
       
     })
@@ -913,8 +955,6 @@ export default function Camp(props) {
         })
 
         setContractRewards(rewards)
-
-        console.log("rewards: ", rewards);
 
    
     }
@@ -1059,7 +1099,8 @@ export default function Camp(props) {
       }
     })
 
-    console.log(boxes)
+    console.log(round)
+    console.log(contractRound)
 
  
       return (
@@ -1274,7 +1315,6 @@ export default function Camp(props) {
                   </div>
               </div>
             </div>        
-
         </div>
     )
     
