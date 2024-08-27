@@ -241,6 +241,7 @@ export default function Arena(props) {
                         if (app["key-value"]) {
                           app["key-value"].forEach((keyVal) => {
                             let assetId = base64ToDecimal(keyVal.key)
+                            console.log(assetId, address)
                             let amount = keyVal.value.uint
                             if (address == activeAccount.address) {
                               setMyRewards(myRewards => [...myRewards, {assetId: assetId, amount: amount}])
@@ -1018,9 +1019,7 @@ export default function Arena(props) {
       let appArgs = []
     
       appArgs.push(
-        new Uint8Array(Buffer.from("claim"))
-        
-        
+        new Uint8Array(Buffer.from("claim")) 
       )
     
       let accounts = []
@@ -1033,6 +1032,8 @@ export default function Arena(props) {
         foreignAssets.push(Number(reward.assetId))
 
       })
+
+      console.log(foreignAssets)
 
       const pk = algosdk.decodeAddress(activeAccount.address);
       const addrArray = pk.publicKey
@@ -1099,9 +1100,7 @@ export default function Arena(props) {
       }
     })
 
-    console.log(round)
-    console.log(contractRound)
-
+    console.log(round - contractRound)
  
       return (
           

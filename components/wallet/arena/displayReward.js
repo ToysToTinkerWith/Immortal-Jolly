@@ -39,14 +39,77 @@ export default class DisplayReward extends React.Component {
     
                 const session = await response.json();
                 let nftUrl = "";
+
+                console.log(session.assets[0])
                 
                 // Check if it's a special case with a hardcoded image
                 if (this.props.nftId === 877451592) {
                     nftUrl = "/cursedgold.png";
-                } else if(session.assets[0].params["unit-name"] === "MUSHI27") {
-                    nftUrl = "https://ipfs.algonode.xyz/ipfs/QmfMC91vxxffd5yxeCsXHQHbxAvkc2casgrzEmUMKcA25V";
-                } else {
-                    console.log(session.assets[0].params)
+                } 
+                 
+                else if(session.assets[0].params.url == "template-ipfs://{ipfscid:1:raw:reserve:sha2-256}") {
+                    const addr = algosdk.decodeAddress(session.assets[0].params.reserve)
+
+                    const mhdigest = digest.create(mfsha2.sha256.code, addr.publicKey)
+
+                    const ocid = CID.create(1, 0x55, mhdigest)
+
+                    console.log(ocid.toString())
+
+
+                    fetch("https://gateway.pinata.cloud/ipfs/" + ocid.toString(), {
+                        method: 'get'
+                    }).then(async (response) => {
+                        let data = await response.json()
+                        
+                            this.setState({
+                                nft: session.assets[0].params,
+                                nftUrl: "https://ipfs.algonode.xyz/ipfs/" + data.image.slice(7) + "",
+                            })
+                        
+
+                    }).catch(function(err) {
+                        // Error :(
+                    });
+                    
+
+                  
+
+                }
+                else if(session.assets[0].params.url == "template-ipfs://{ipfscid:0:dag-pb:reserve:sha2-256}") {
+                    const addr = algosdk.decodeAddress(session.assets[0].params.reserve)
+
+                    const mhdigest = digest.create(mfsha2.sha256.code, addr.publicKey)
+
+                    const ocid = CID.create(0, 0x70, mhdigest)
+
+                    console.log(ocid.toString())
+
+                    if (ocid.toString() == "bafkreifewahcgqc6u5r6cqsmwmwcyk7socld7r3fgzqg3vhlhn2soljdwq") {
+
+                    fetch("https://gateway.pinata.cloud/ipfs/" + ocid.toString(), {
+                        method: 'get'
+                    }).then(async (response) => {
+                        let data = await response.json()
+                        
+                            this.setState({
+                                nft: session.assets[0].params,
+                                nftUrl: "https://ipfs.algonode.xyz/ipfs/" + data.image.slice(7) + "",
+                            })
+                        
+
+                    }).catch(function(err) {
+                        // Error :(
+                    });
+                    }
+
+                    else {
+                        console.log("https://ipfs.algonode.xyz/ipfs/" + ocid.toString())
+                        nftUrl = "https://ipfs.algonode.xyz/ipfs/" + ocid.toString()
+                    }
+
+                }
+                else {
                     const ipfsPrefix = 'https://ipfs.algonode.xyz/ipfs/';
                     let urlPath = session.assets[0].params.url;
     
