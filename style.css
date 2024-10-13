@@ -41,12 +41,16 @@ html, body, .main {
   height: 100%;
 }
 
-html {
-  background-color: black;
-}
-
 #__next {
   height: 100%;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.navButtonsContainer {
+  margin-left: 500px;
 }
 
 .arena-body {
@@ -71,11 +75,10 @@ html {
 }
 
 .contestant-img {
-  width: 22.5%;
   border-radius: 25px;
   margin-bottom: 10px;
   margin-right: 10%;
-  max-width: 130px;
+  max-width: 180px;
 }
 
 .contestant-text {
@@ -84,28 +87,30 @@ html {
   align-items: left;
 }
 
-.reward-img {
-  border-radius: 30px;
-  max-width: 100%;
-} 
-
 .holder-img, .reward-img {
-  max-width: 130px;
+  max-width: 180px;
+  border-radius: 30px;
 }
 
 .asset-name {
   margin-right: 60px;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 600px) {
     body {
         min-width: fit-content;
+    }
+    .navButtonsContainer {
+      margin-left: 150px;
     }
     .arena-flex {
       display: flex;
       flex-direction: column;
       justify-content: left;
       width: 100%;
+    }
+    .holder-img, .reward-img {
+      max-width: 150px;
     }
     .contestants-item {
       padding: 10px 35px 10px 0;
@@ -136,10 +141,6 @@ html {
         margin-bottom: 10px;
         align-items: flex-start;
     }
-    .reward-img {
-      border-radius: 20px;
-      max-width: 100%;
-    } 
     .arena-body {
       display: flex;
       flex-direction: column;
