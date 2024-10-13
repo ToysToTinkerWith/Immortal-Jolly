@@ -199,5 +199,4 @@ export default class DisplayMutant extends React.Component {
         
     }
     
-
 }
