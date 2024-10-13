@@ -43,9 +43,44 @@ export default class DisplayReward extends React.Component {
                 // Check if it's a special case with a hardcoded image
                 if (this.props.nftId === 877451592) {
                     nftUrl = "/cursedgold.png";
-                } else if(session.assets[0].params["unit-name"] === "MUSHI27") {
+                } 
+                else if(session.assets[0].params["unit-name"] === "MUSHI27") {
                     nftUrl = "https://ipfs.algonode.xyz/ipfs/QmfMC91vxxffd5yxeCsXHQHbxAvkc2casgrzEmUMKcA25V";
-                } else {
+                } 
+                else if(session.assets[0].params.url == "template-ipfs://{ipfscid:1:raw:reserve:sha2-256}") {
+                    const addr = algosdk.decodeAddress(session.assets[0].params.reserve)
+
+                    const mhdigest = digest.create(mfsha2.sha256.code, addr.publicKey)
+
+                    const ocid = CID.create(1, 0x55, mhdigest)
+
+                    console.log(ocid.toString())
+
+                    if (ocid.toString() == "bafkreifewahcgqc6u5r6cqsmwmwcyk7socld7r3fgzqg3vhlhn2soljdwq") {
+
+                    fetch("https://gateway.pinata.cloud/ipfs/" + ocid.toString(), {
+                        method: 'get'
+                    }).then(async (response) => {
+                        let data = await response.json()
+                        
+                            this.setState({
+                                nft: session.assets[0].params,
+                                nftUrl: "https://ipfs.algonode.xyz/ipfs/" + data.image.slice(7) + "",
+                            })
+                        
+
+                    }).catch(function(err) {
+                        // Error :(
+                    });
+                    }
+
+                    else {
+                        console.log("https://ipfs.algonode.xyz/ipfs/" + ocid.toString())
+                        nftUrl = "https://ipfs.algonode.xyz/ipfs/" + ocid.toString()
+                    }
+
+                }
+                else {
                     const ipfsPrefix = 'https://ipfs.algonode.xyz/ipfs/';
                     let urlPath = session.assets[0].params.url;
     
@@ -53,11 +88,14 @@ export default class DisplayReward extends React.Component {
                     if (urlPath.includes('ipfs.io/ipfs/')) {
                         urlPath = urlPath.split('ipfs.io/ipfs/')[1];
                     }
+
+                    if (urlPath.includes('ipfs://')) {
+                        urlPath = urlPath.split('ipfs://')[1];
+                    }
     
                     nftUrl = `${ipfsPrefix}${urlPath}`;
                 }
     
-                console.log(nftUrl); // Debugging to see the final URL
                 this.setState({
                     nft: session.assets[0].params,
                     nftUrl: nftUrl,
@@ -65,7 +103,6 @@ export default class DisplayReward extends React.Component {
     
             }
         } catch (error) {
-            console.error('Error fetching NFT details:', error);
             this.props.sendDiscordMessage(error.toString(), "Display Reward Fetch");
         }
     }
@@ -107,4 +144,6 @@ export default class DisplayReward extends React.Component {
         
     }
     
+
+
 }

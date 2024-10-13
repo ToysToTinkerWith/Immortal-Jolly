@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 
 import Head from "next/head"
 
@@ -20,6 +20,38 @@ export default function Index(props) {
 
     const { activeAccount } = useWallet()
     const [page, setPage] = useState("map")
+
+    useEffect(() => {
+        console.log('Current page:', page);
+
+        // Update body background based on the current page
+        const body = document.body;
+        if (page === "map") {
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+            body.classList.add('no-scroll');
+        } else if (page === "camp") {
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+            body.classList.remove('no-scroll');
+        } else if (page === "shrine") {
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+            body.classList.remove('no-scroll');
+        }else if (page === "obelisk") {
+            body.style.backgroundColor = "white";
+            body.style.color = "black";
+            body.classList.remove('no-scroll');
+        } else if (page === "arena") {
+            body.style.backgroundColor = "black";
+            body.style.color = "white";
+            body.classList.remove('no-scroll');
+        } else {
+            body.style.backgroundColor = "";
+            body.style.color = "";
+            body.classList.remove('no-scroll');
+        }
+    }, [page]);
    
 
         return (
@@ -88,4 +120,4 @@ export default function Index(props) {
             </div>
         )
     
-}
+    }

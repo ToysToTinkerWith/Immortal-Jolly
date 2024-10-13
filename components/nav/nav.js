@@ -46,7 +46,7 @@ export default class Nav extends React.Component {
           </Grid>
           
           {!isMobile && (
-            <div style={{ display: 'flex', justifyContent: 'center', marginLeft: "150px" }}>
+            <div className="navButtonsContainer" style={{ display: 'flex', justifyContent: 'center' }}>
               <Button disabled={!this.props.activeAccount} onClick={() => this.props.setPage("collection")}>
                 <Typography> Collection </Typography>
               </Button>
@@ -72,4 +72,5 @@ export default class Nav extends React.Component {
   }
   
   
+
 }

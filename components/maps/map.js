@@ -100,9 +100,9 @@ export default function Map(props) {
                 </Button>
     
                 {windowDimensions.width > 600 ? 
-                <img src={"map.jpg"} style={{width: "100%", height: "100%"}} />
+                <img src={"map.jpg"} style={{ width: "100%", height: "100%", objectFit: "cover" }}/>
                 :
-                <img src={"mapphone.jpg"} style={{width: "100%", height: "100%"}} />
+                <img src={"mapphone.jpg"} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                 }
                
                 
@@ -113,4 +113,5 @@ export default function Map(props) {
     }
 
     
+
 }
