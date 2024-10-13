@@ -12,7 +12,6 @@
   },
   "dependencies": {
     "@blockshake/defly-connect": "^1.0.0",
-    "@daffiwallet/connect": "^1.0.3",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@json-rpc-tools/utils": "^1.7.6",
@@ -26,7 +25,7 @@
     "algosdk": "^2.1.0",
     "firebase": "^9.16.0",
     "firebase-admin": "^11.5.0",
-    "firebase-functions": "^4.4.1",
+    "firebase-functions": "^5.0.1",
     "framer-motion": "^4.1.17",
     "micro": "^9.3.4",
     "multiformats": "^13.1.0",
