@@ -241,7 +241,6 @@ export default function Arena(props) {
                         if (app["key-value"]) {
                           app["key-value"].forEach((keyVal) => {
                             let assetId = base64ToDecimal(keyVal.key)
-                            console.log(assetId, address)
                             let amount = keyVal.value.uint
                             if (address == activeAccount.address) {
                               setMyRewards(myRewards => [...myRewards, {assetId: assetId, amount: amount}])
@@ -1019,7 +1018,9 @@ export default function Arena(props) {
       let appArgs = []
     
       appArgs.push(
-        new Uint8Array(Buffer.from("claim")) 
+        new Uint8Array(Buffer.from("claim"))
+        
+        
       )
     
       let accounts = []
@@ -1032,8 +1033,6 @@ export default function Arena(props) {
         foreignAssets.push(Number(reward.assetId))
 
       })
-
-      console.log(foreignAssets)
 
       const pk = algosdk.decodeAddress(activeAccount.address);
       const addrArray = pk.publicKey
@@ -1100,7 +1099,9 @@ export default function Arena(props) {
       }
     })
 
-    console.log(round - contractRound)
+    console.log(round)
+    console.log(contractRound)
+
  
       return (
           
@@ -1110,9 +1111,9 @@ export default function Arena(props) {
 
             
 
-              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", margin: "40px 0"}}> Choose your fighter! </Typography>
+              <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", margin: "40px 0", marginLeft: "25px"}}> Choose your fighter! </Typography>
 
-              <Typography color="primary"  align="left" variant="caption" style={{color: "white", textAlign: "left", marginBottom: "46px"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
+              <Typography color="primary"  align="left" variant="caption" style={{color: "white", textAlign: "left", marginBottom: "46px", marginLeft: "25px"}}> Who will you send to their death in the ultimate battle for glory and treasure? </Typography>
 
               
 
@@ -1187,7 +1188,7 @@ export default function Arena(props) {
               null
               }       
 
-              <Grid container>
+              <Grid container style={{marginLeft: "25px"}}>
               {assets.length > 0 ? assets.map((asset, index) => {
                 let found = false
                 boxes.forEach((box) => {
@@ -1197,7 +1198,7 @@ export default function Arena(props) {
                 })
                 if (found) {
                   return (
-                    <Grid key={index} item xs={6} sm={4} md={3} lg={3} style={{display: "flex", flexDirection: "column", alignItems: "center", maxWidth: "fit-content"}}>
+                    <Grid key={index} item xs={12} sm={6} md={4} lg={3} style={{display: "flex", flexDirection: "column", alignItems: "center", maxWidth: "fit-content"}}>
                     <DisplayMutant key={asset.index} nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
                     <Button variant="contained" color="secondary" 
                     style={{backgroundColor: "#ffffff", display: "flex", margin: "auto", borderRadius: "50px"}}
@@ -1211,7 +1212,7 @@ export default function Arena(props) {
                 }
                 else {
                   return (
-                    <Grid key={index} item xs={6} sm={4} md={3} lg={2}>
+                    <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                     <DisplayMutant key={asset.index} nftId={asset.index}  round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
                     
                     <Button variant="contained" color="secondary" 
@@ -1244,10 +1245,10 @@ export default function Arena(props) {
           </div>     
             <div className="arena-flex">
               <div className="prizes-content">
-                <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left", margin: "40px 0"}}> Prizes </Typography>
+                <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left", margin: "40px 0", marginLeft: "25px"}}> Prizes </Typography>
 
                 {round && contractRound ? 
-                  <div style={{padding: "0 0 40px"}}>
+                  <div style={{padding: "0 0 40px", marginLeft: "25px"}}>
                   <Typography color="primary"  align="left" variant="caption" style={{color: "white", padding: "5px, 0"}}> Time til next battle: {((732000 - (round - contractRound)) / 732000 * 4 * 7).toFixed(2)} more days </Typography>
 
                   <BorderLinearProgress variant="determinate" value={(round - contractRound) / 732000 * 100} style={{maxWidth: '600px'}}/>
@@ -1262,7 +1263,7 @@ export default function Arena(props) {
                     {roundRewards.length > 0 ?
                     roundRewards.map((reward, index) => {
                       return (
-                        <Grid item xs={4} sm={3} md={3} lg={3} key={index} style={{margin: "0 20px 40px"}}>
+                        <Grid key={index} item xs={12} sm={6} md={4} lg={3} style={{margin: "0 20px 40px"}}>
                           <DisplayReward key={reward.assetId} nftId={reward.assetId} amount={reward.amount} round={round}  sendDiscordMessage={props.sendDiscordMessage}/>
 
                         </Grid>
@@ -1296,7 +1297,7 @@ export default function Arena(props) {
                 }   
               </div>
               <div className="contestants-content" style={{position: "relative"}}>            
-                  <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left", margin: "0 0 30px"}}> Contestants </Typography>
+                  <Typography color="primary"  align="left" variant="h2" style={{fontFamily: "Deathrattle", color: "#ef8e36", textAlign: "left", margin: "0 0 30px", marginLeft: "25px"}}> Contestants </Typography>
 
                   <div style={{backgroundColor: "#1a1a1a", borderRadius: 15}} className="scrollable-content">
                     <div className="scrollable-content-inner">
@@ -1316,6 +1317,5 @@ export default function Arena(props) {
             </div>        
         </div>
     )
-    
     
 }
